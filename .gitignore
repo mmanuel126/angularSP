@@ -46,9 +46,9 @@ Thumbs.db
 .eslintcache
 
 # Environment files (secrets!)
-src/environments/environment*.ts
-.env
-.env.*.local
+#src/environments/environment*.ts
+#.env
+#.env.*.local
 
 # NPM global installs (if used)
 .npm-global/
