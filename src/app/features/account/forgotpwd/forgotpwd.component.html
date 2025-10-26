@@ -1,0 +1,92 @@
+<body class="image-bg">
+    <form #forgotPwdForm='ngForm' (ngSubmit)="forgotPassword()">
+        <div class="h-50  bg-animation">
+            <div class="d-flex h-50 justify-content-center align-items-center">
+                <div class="mx-auto app-login-box col-md-60">
+                    <div class="modal-dialog w-90 mx-auto">
+                        <div class="modal-content modal_radius">
+                            <div class="modal-body">
+                                <div class="mx-auto mb-3 logo_div">
+                                    <img src="/images/logo100.jpg" class="logo_size">
+                                </div>
+                                <div class="modal-title text-center">
+                                    <!-- h5 class="mt-2" -->
+                                    <b>Forgot your password?</b><br>
+                                    <!-- /h5 -->
+                                    <!-- h6 class="mt-1 mb-0 opacity-8" -->
+                                    <span>Enter your email so we can help you get back<br> into your account.</span>
+                                    <!-- /h6 -->
+                                    <div class="divider"></div>
+
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                    <div tabindex="-1">
+
+                                                        <div id="exampleInputGroup1" role="group"
+                                                            aria-describedby="exampleInputGroup1__BV_description_"
+                                                            class="form-group">
+                                                            <div>
+                                                                <input autocomplete="off" name="txtEmail" id="txtEmail"
+                                                                    type="email" placeholder="Email..."
+                                                                    required="required" email ngModel
+                                                                    #txtEmail="ngModel" [(ngModel)]="formData.email"
+                                                                    aria-required="true" class="form-control"
+                                                                    aria-describedby="exampleInputGroup1__BV_description_">
+                                                                @if (txtEmail.touched && !txtEmail.valid) {
+                                                                <span style="font-size:10pt;"
+                                                                    class="errorMessage msg_color">
+                                                                    Valid email is required.
+                                                                </span>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div>
+                                                            <button type="submit" id="btnReset"
+                                                                [disabled]="!forgotPwdForm.valid || show"
+                                                                class="btn btn-primary btn-md btn-block">
+                                                                @if (show) {
+                                                                <i class='fa fa-spinner fa-spin'></i>
+                                                                Please wait...
+                                                                } @else {
+                                                                Reset Password
+                                                                }
+                                                            </button>
+                                                        </div>
+
+                                                        <div style="padding: 12px; text-align: center; font-size:10pt">
+                                                            ---- OR ----
+                                                        </div>
+
+                                                        <div style="text-align: center; padding-bottom:20px">
+                                                            <h6 class="mb-0">
+                                                                <a [routerLink]="['/register']"
+                                                                    class="text-primary">Create new account</a>
+                                                            </h6>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+
+                                        <div class="modal-footer clearfix"></div>
+
+                                        <h6 class="mb-0"><a [routerLink]="['/']" class="text-primary">Back to login</a>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>

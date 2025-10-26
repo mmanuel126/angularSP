@@ -1,0 +1,20 @@
+export class MemberProfileContactInfo {
+  email: string = '';
+  otherEmail: string = '';
+  facebook: string = '';
+  instagram: string = '';
+  twitter: string = '';
+  website: string = '';
+  homePhone: string = '';
+  cellPhone: string = '';
+  otherPhone: string = '';
+  address: string = '';
+  city: string = '';
+  Neighborhood: string = '';
+  state: string = '';
+  zip: string = '';
+  showAddress: boolean = false;
+  showEmailToMembers: boolean = false;
+  showCellPhone: boolean = false;
+  showHomePhone: boolean = false;
+}

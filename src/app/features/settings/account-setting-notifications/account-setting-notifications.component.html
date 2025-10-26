@@ -1,0 +1,120 @@
+<div>
+    <form class="form-horizontal" name="asNotificationsForm" #asNotificationsForm='ngForm'
+        (ngSubmit)="saveASNotifications()">
+
+        <span class="settingAct10pt" style="padding: 0px 0px 0px 0px; font-weight:normal">
+            We will notify you by email whenever actions that involve you are taken. Each
+            site application has its own email notification settings. Use this section
+            to change these settings as necessary.<br>
+        </span><br>
+        <p class="settingAct10pt" style="font-weight:normal">
+            You will be emailed at&nbsp;<b><span
+                    id="lblNotificationEmail">{{this.session.getSessionVal('userEmail')}}</span></b>&nbsp;whenever
+            someone:
+        </p>
+        <table>
+            <tr>
+                <td style=" padding-left: 30px;">
+                    <table>
+                        <tr>
+                            <td
+                                style="width: 300px; font-weight: bold; border-bottom-style: solid; border-bottom-color: Gray; text-align:left;
+                            border-bottom-width: 1px; font-family :'Lucida Grande', tahoma, helvetica; font-size:10pt;">
+                                {{this.webSiteName}}
+                            </td>
+                            <td
+                                style="font-weight: bold; border-bottom-style: solid; border-bottom-color: Gray;
+                            border-bottom-width: 1px; font-family :'Lucida Grande', tahoma, helvetica; font-size:10pt;">
+                                Select
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="settingCtl8ptLabelBlack">
+                                Send you a message
+                            </td>
+                            <td>
+                                <span class=" settingCtl8ptText">
+                                    <input id="chkSendMessage" #chkSendMessage="ngModel" [(ngModel)]="asModel.sendMsg"
+                                        type="checkbox" name="chkSendMessage" />
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingCtl8ptLabelBlack">
+                                Adds you as a contact
+                            </td>
+                            <td>
+                                <span class="settingCtl8ptText"><input id="chkAddAsFriend" #chkAddAsFriend="ngModel"
+                                        [(ngModel)]="asModel.addAsFriend" type="checkbox"
+                                        name="chkAddAsFriend" /></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingCtl8ptLabelBlack">
+                                Confirms a contact request
+                            </td>
+                            <td>
+                                <span class="settingCtl8ptText"><input id="chkConfirmFriendShip"
+                                        #chkConfirmFriendShip="ngModel" [(ngModel)]="asModel.confirmFriendShipRequest"
+                                        type="checkbox" name="chkConfirmFriendShip" /></span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+
+                    <table style=" margin-top:-5px">
+                        <tr>
+                            <td
+                                style="width: 300px; font-weight: bold; border-bottom-style: solid; border-bottom-color: Gray; text-align:left;
+                            border-bottom-width: 1px; font-family :'Lucida Grande', tahoma, helvetica; font-size:10pt;">
+                                Help
+                            </td>
+                            <td
+                                style="font-weight: bold; border-bottom-style: solid; border-bottom-color: Gray;
+                            border-bottom-width: 1px; font-family :'Lucida Grande', tahoma, helvetica; font-size:10pt;">
+                                Select
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingCtl8ptLabelBlack">
+                                Replies to your help questions
+                            </td>
+                            <td>
+                                <input id="chkRepliesYourHelpRequest" #chkRepliesYourHelpRequest="ngModel"
+                                    [(ngModel)]="asModel.repliesToYourHelpQuest" type="checkbox"
+                                    name="chkRepliesYourHelpRequest" />
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <br>
+                    <div>
+                        <button type="submit" id="saveNotifications" [disabled]="isSaving"
+                            class="btn btn-primary btn-md">
+                            <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i>
+                            {{isSaving ? "Saving..." : "Save"}}</button>
+                    </div>
+                    <div style="padding-bottom:60px;">
+                        <span
+                            [style.color]="isNotificationSuccess === true ? 'green' : (isNotificationSuccess === false ? 'red' : 'black')">
+                            {{
+                            isNotificationSuccess === true
+                            ? "Saved successfully."
+                            : (isNotificationSuccess === false ? "Save unsuccessful." : "")
+                            }}
+                        </span>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>

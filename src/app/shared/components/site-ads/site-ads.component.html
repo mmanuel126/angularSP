@@ -1,0 +1,35 @@
+<div class="container-fluid">
+  <div class="card-hover-shadow-2x mb-3 card modal_radius" style="padding:10px">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-sm text-capitalize font-weight-bold">
+        <i class="header-icon lnr-lighter icon-gradient bg-amy-crisp"> </i>
+        Site Guide
+      </div>
+    </div>
+    <div class="scroll-area-lg" style="height:auto;">
+      <carousel [noPause]="false" [showIndicators]="false">
+        <slide *ngFor='let res of this.adsList; let i = index'>
+          <div class="" style="padding-top:10px;">
+            <div>
+              <a [routerLink]="res.navigateUrl" [queryParams]="{adId:res.id}" href="#">
+                <span style="color:#4A6792; font-size:11pt;font-weight:bold">{{res.headerText}}</span><br>
+                <table>
+                  <tr>
+                    <td>
+                      <img class="scroll-area-lg" src="/images/ads/{{res.imageUrl}}" alt=""
+                        style="height:50px;width:60px;border-width:0px; padding:10px 10px 10px 0px" />
+                    </td>
+                    <td style="font-size:10pt;color:#696969; padding-left:5px;">
+                      {{res.textField}}
+                    </td>
+                  </tr>
+                </table>
+                <span style="color:#4A6792; font-size:10pt;font-weight:normal">Click here to get started. </span>
+              </a>
+            </div>
+          </div>
+        </slide>
+      </carousel>
+    </div>
+  </div>
+</div>

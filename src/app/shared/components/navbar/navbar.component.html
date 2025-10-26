@@ -1,0 +1,180 @@
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+  <div class="container">
+    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <span class="logo_popup_text"><img
+          src="/images/logo100.jpg" width="150" height="35"> </span>
+    </a>
+    <button title="Where atletes, coaches, and sport agents connects." class="navbar-toggler" type="button"
+      data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+      <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/home']">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Contacts
+          </a>
+          <div class="dropdown-menu navbar-menu-style" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/features/contacts/my-contacts']"
+              title="A list of people you are connected to on this site.">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-user-plus fa-stack-1x"></i>
+              </span>&nbsp;My Contacts
+
+            </a>
+            <a class="dropdown-item" [routerLink]="['/contacts/requests']"
+              title="A list of people who are requesting to be connected with you.">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-user-secret fa-stack-1x"></i>
+              </span>&nbsp;Requests
+
+            </a>
+            <a class="dropdown-item" [routerLink]="['/contacts/find-contacts']"
+              title="search for people you want to connect with.">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-search fa-stack-1x"></i>
+              </span>&nbsp;Find Contacts
+
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/contacts/people-i-follow']"
+              title="A list of people you are connected to on this site.">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-user-plus fa-stack-1x"></i>
+              </span>&nbsp;People I Follow
+
+            </a>
+            <a class="dropdown-item" [routerLink]="['/contacts/people-following-me']"
+              title="A list of people you are connected to on this site.">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-user-plus fa-stack-1x"></i>
+              </span>&nbsp;People Who are Following Me
+
+            </a>
+          </div>
+        </li>
+
+        <li class="nav-item flex-fill">
+
+          <div class="input-group">
+            <input class="form-control py-2 rounded-pill mr-1 pr-5" type="search" ngModel (keydown.enter)='doSearch()'
+              (keyup)="searchEntity(autoCompleteModel.name)" [(ngModel)]="autoCompleteModel.name"
+              style="background-color:#f7f9fa;" placeholder="Search by name, sport, or profile type...">
+            <span class="input-group-append">
+              <button class="btn rounded-pill border-0 ml-n5" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+          <div class="search-result">
+            @if (flag) {
+            <ul>
+              @for (entity of entities | async; track entity.entityID) {
+              <li>
+                <a (click)="onselectEntity(entity.entityName, entity.entityID, entity.sType)">
+                  <table>
+                    <tr>
+                      <td>
+                        <a (click)="onselectEntity(entity.entityName, entity.entityID, entity.sType)">
+                          <img [src]="memberImagesUrlPath + entity.picturePath"
+                            style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+                        </a>
+                      </td>
+                      <td style="font-size:10pt">
+                        <a (click)="onselectEntity(entity.entityName, entity.entityID, entity.sType)">
+                          {{ entity.entityName }}
+                        </a>
+                        &nbsp;
+                        <div [innerHTML]="entity.cityState"></div>
+                      </td>
+                    </tr>
+                  </table>
+                </a>
+              </li>
+              }
+            </ul>
+            }
+          </div>
+        </li>
+      </ul>
+
+    </div>
+
+    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+      <ul class="navbar-nav ml-auto ">
+
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/messages/view-messages']"
+            [queryParams]="{ memberID: session.getSessionVal('userID') }" title="Messenger">
+            <span class="fa-stack fa-1x">
+              <i class="fa fa-circle fa-stack-2x icon-background"></i>
+              <i class='fab fa-facebook-messenger fa-stack-1x'></i>
+            </span><span *ngIf="this.msgBadgeCnt != '0'" class=' badge badge-danger'
+              title='{{this.msgCntText}}'>{{this.msgBadgeCnt}}</span>
+          </a>
+        </li>
+        <li class="nav-item dropdown" title="{{this.session.getSessionVal('userName')}}">
+          <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img src="{{this.memberImagesUrlPath + this.session.getSessionVal('userImage')}}"
+              title="{{this.session.getSessionVal('userName')}}"
+              style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:30px;width:30px;border-radius:50%">
+          </a>
+          <div title="{{this.session.getSessionVal('userName')}}" class="dropdown-menu navbar-menu-style"
+            aria-labelledby="navbarDropdown">
+            <a class="dropdown-item " (click)="doShowProfile(this.session.getSessionVal('userID'))" href="">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-id-card fa-stack-1x"></i>
+              </span>
+              &nbsp;View Profile
+            </a>
+            <a class="dropdown-item" [routerLink]="['/members/edit-profile']" [queryParams]="{memberID:this.userId}">
+
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa fa-edit fa-stack-1x"></i>
+              </span>
+              &nbsp;Edit Profile...
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/settings/account-setting']"
+              [queryParams]="{memberID:this.userId}">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa fa-cog fa-stack-1x"></i>
+              </span>
+              &nbsp;
+              Account Settings...
+            </a>
+            <a class="dropdown-item" [routerLink]="['/settings/privacy-setting']"
+              [queryParams]="{memberID:this.userId}">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-lock fa-stack-1x"></i>
+              </span>
+              &nbsp;
+              Privacy Settings...
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="doLogoff();" href="#">
+              <span class="fa-stack fa-1x">
+                <i class="fa fa-circle fa-stack-2x icon-background"></i>
+                <i class="fa fa-power-off fa-stack-1x"></i>
+              </span>
+              &nbsp;Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,65 @@
+
+.separator-hr {
+    margin: 0 5px;
+    border-top-style: dashed;
+}
+
+.edit-separator-hr {
+    margin: 10px 5px;
+    border-top-style: dashed;
+}
+
+.last-separator-hr {
+    margin-top: 5px;
+}
+
+.edit-last-separator-hr {
+    margin-top: 15px;
+}
+
+.password-separator-hr {
+    margin: 5px;
+    border-style: none;
+}
+
+
+.form-group {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.password-well {
+    margin-bottom: 0;
+}
+
+.hint-sm {
+    display: block;
+}
+
+.checkbox.user-enabled {
+    display: inline-block;
+}
+
+.unblock-user {
+    margin-left: 34px;
+}
+
+@media (min-width: 992px) {
+    .user-enabled {
+        margin-left: 40px;
+    }
+}
+
+input.form-control {
+    /* border-left-width: 5px;  */
+    height:29px;
+    width:300px;
+    padding-top:1px;
+    padding-left:-1px;
+}
+select.form-control {
+   height:29px;
+   width:350px;
+   padding-top:1px;
+}
+

@@ -1,0 +1,5 @@
+.scroll-area-lg
+{
+    height: auto; /* Set this height to the appropriate size */
+    overflow-y: hidden; /* Only add scroll to vertical column */
+}

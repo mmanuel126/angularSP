@@ -1,0 +1,147 @@
+<div>
+    <form class="form-horizontal" name="asProfileForm" #asProfileForm='ngForm' (ngSubmit)="saveProfileSettings()">
+
+        <p style="padding: 10px 18px 10px 6px;">
+            You can control who can view your profile and related information by adjusting these
+            settings.
+        </p>
+        <table>
+            <tr>
+                <td style="padding-left: 30px;">
+                    <table>
+                        <tr>
+                            <td class="settingPriLabel">
+                                Basic Information:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlBasicInfo" #ddlBasicInfo="ngModel" [(ngModel)]="asModel.basicInfo"
+                                    ngModel id="ddlBasicInfo" class="form-control" style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingPriLabel">
+                                Personal&nbsp;Information:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlPersonalInfo" #ddlPersonalInfo="ngModel"
+                                    [(ngModel)]="asModel.personalInfo" ngModel id="ddlPersonalInfo" class="form-control"
+                                    style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="settingPriLabel">
+                                Contacts:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlContacts" #ddlContacts="ngModel" [(ngModel)]="asModel.contactInfo"
+                                    ngModel id="ddlContacts" class="form-control" style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingPriLabel">
+                                Education:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlEducation" #ddlEducation="ngModel" [(ngModel)]="asModel.education"
+                                    ngModel id="ddlEducation" class="form-control" style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td class="settingPriLabel">
+                                Mobile Phone:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlMobilePhone" #ddlMobilePhone="ngModel"
+                                    [(ngModel)]="asModel.mobilePhone" ngModel id="ddlMobilePhone" class="form-control"
+                                    style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingPriLabel">
+                                Other Phone:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlOtherPhone" #ddlOtherPhone="ngModel" [(ngModel)]="asModel.otherPhone"
+                                    ngModel id="ddlOtherPhone" class="form-control" style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="settingPriLabel">
+                                Email Address:&nbsp;
+                            </td>
+                            <td class="settingPriDDL">
+                                <select name="ddlEmailAddress" #ddlEmailAddress="ngModel"
+                                    [(ngModel)]="asModel.emailAddress" ngModel id="ddlEmailAddress" class="form-control"
+                                    style="width:auto; height:auto">
+                                    <option value="1">Public</option>
+                                    <option value="2">Private</option>
+                                    <option value="3">Only Contacts</option>
+
+                                </select>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <table>
+                        <tr>
+                            <td class="settingPriLabel"></td>
+                            <td>
+                                <span id="lblResult" style="color:Green;font-weight:bold;"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div>
+            <button type="submit" id="saveProfile" [disabled]="!asProfileForm.valid || isSaving"
+                class="btn btn-primary btn-md">
+                <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Save"}}</button>
+        </div>
+        <div style="padding-bottom:60px;">
+            <span [style.color]="isProfileSuccess === true ? 'green' : (isProfileSuccess === false ? 'red' : 'black')">
+                {{
+                isProfileSuccess === true
+                ? "Saved successfully."
+                : (isProfileSuccess === false ? "Save unsuccessful." : "")
+                }}
+            </span>
+        </div>
+        <!--div style="padding-bottom:60px">
+            <span style="color:green">{{this.isProfileSuccess ? "Saved sucessfully." : ""}}</span>
+          </div-->
+
+    </form>
+</div>

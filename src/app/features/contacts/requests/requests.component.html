@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col-sm-14 col-md-12">
+    <div class="mb-3 card modal_radius" style="padding:10px">
+      <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-bold">
+          <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"> </i>
+          Contact Requests
+        </div>
+      </div>
+      <div class='col-sm-14 col-lg-25' style="padding:10px;">
+        <div class="container">
+          <div class="row">
+            <div class='col-md-offset-2 col-md-8 text-left' style='padding-top:15px;padding-bottom:10px'>
+
+            </div>
+          </div>
+          <div style="padding-bottom:15px">
+            This is a list of members who are requesting to make you a connection. If you accept the request then you
+            will be able to communicate and share posts with the member.
+          </div>
+
+          @if (spinner) {
+          <div style="padding-left:0px;padding-top:5px; font-size:8pt;display:block">
+            <i class="fas fa-spinner fa-spin"></i>&nbsp;Working...
+          </div>
+          }
+
+          <div *ngIf="this.contactCnt==0;else showConnectionsList_Content">
+            There are no contact requests to display.
+          </div>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #showConnectionsList_Content>
+  @if (this.contactCnt > 0) {
+  <div style="padding-left:0px;padding-top:7px; padding-bottom:5px;display:block">
+    {{this.contactCnt}}&nbsp;contact(s) found.
+  </div>
+  }
+  <div id="tbMsgPartialDiv" style="background-color: white; overflow-x: auto; height: 400px">
+    <table
+      style="width: 350px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:11pt">
+      <tbody>
+        <tr *ngFor="let res of contactInfoList" style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+
+          <td
+            style="width: 40px; text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <a [routerLink]="['/members/view-profile/show-profile']" [queryParams]="{memberID:res.contactID}"
+              style="border:none">
+              <img src="{{this.memberImagesUrlPath}}{{res.picturePath}}"
+                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+            </a>
+          </td>
+          <td style="vertical-align: top; text-align: left;vertical-align:top" class="textfonts10pt">
+            <a id="lbSName" [routerLink]="['/members/view-profile/show-profile']"
+              [queryParams]="{memberID:res.contactID}" href="">{{res.friendName}}</a>
+            <br />
+            @if (res.titleDesc != '') {
+            <span id="lblTitle" style="color:Gray;font-size:10pt;">
+              {{res.titleDesc}}
+              <br>
+            </span>
+            }
+
+            <a style="font-size:10pt" id="lblAccept" href="" (click)="acceptRequest(res.contactID);">Accept</a>
+            <span id="lblSep">&nbsp;|&nbsp;</span>
+            <a style="font-size:10pt" id="lblAccept" href="" (click)="rejectRequest(res.contactID);">Reject</a>
+            <br /><br>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+</ng-template>

@@ -1,0 +1,207 @@
+<div class="row">
+  <div class="col-sm-14 col-md-12">
+    <div class="mb-3 card modal_radius" style="padding:10px">
+
+      <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-bold">
+          <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"> </i>
+          Finding Contacts
+        </div>
+      </div>
+
+      <div class='col-sm-14 col-lg-25' style="padding:10px;">
+
+        <div class="container">
+
+          <div style="padding-bottom:5px">
+            You can find people that you know and request to add them to your contacts list. You can
+            <span *ngIf="cntSuggestCnt !=0">
+              scroll
+              the suggestions box below
+              or
+            </span> use the search box by typing in a person's name, an email address, college, or
+            high school attended below.
+          </div>
+
+          @if (cntSuggestCnt !=0) {
+          <div style="padding-bottom:5px">
+            <b>Suggestions base on similar career or other interests:</b>
+          </div>
+          }
+          <div id="gallerycontainer" *ngIf="cntSuggestCnt !=0">
+
+            <div id="tbMsgPartialDiv" style="background-color:white">
+              <table
+                style="width: 0px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:11pt">
+                <tbody>
+                  <tr style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+
+                    @for (res of cntSuggestInfoList; track res) {
+                    <td
+                      style="width: 4050px; text-align: center; cursor:pointer;vertical-align:top; padding: 4px 4px 4px 4px;border-width:1px;border-color:gray;border-style:solid"
+                      class="textfonts8pt gallerycontainer">
+                      <div style="width:160px">
+                        <a [routerLink]="['/members/show-profile']" [queryParams]="{memberID:res.fromID}"
+                          style="border:none">
+                          <img src="http://www.marcman.xyz/assets/images/members/{{res.picturePath}}"
+                            style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:80px;width:80px;" />
+                        </a>
+                        <br>
+                        <a id="lbSName" [routerLink]="['/members/show-profile']"
+                          [queryParams]="{memberID:res.contactID}" href=""
+                          style="width:400px;font-size:9pt">{{res.friendName}}</a>
+                        <br />
+                        @if(res.titleDesc != '') {
+                        <span id="lblTitle" style="color:Gray;font-size:8pt;">{{res.titleDesc}} <br>
+                        </span>
+                        }
+                        <a style="font-size:8pt" id="lblAccept"
+                          (click)="addSearchContactPopup(res.contactID, res.friendName,'suggestion')" href="#">
+                          Add as Contact
+                        </a>
+                        <br />
+                      </div>
+                    </td>
+                    }
+                  </tr>
+                </tbody>
+              </table>
+              <br>
+            </div>
+          </div>
+          <br>
+          <div>
+            <b>Search contacts:</b>
+          </div>
+          <div>
+            <table style="width:0px;border-bottom: solid 2px #e7eadf;">
+              <tr>
+                <td style=" text-align:right; vertical-align: middle">
+                  <div id="pnlInboxSearch" style="padding-bottom:15px">
+                    <form class="form-horizontal" name="searchForm" #searchForm='ngForm' (ngSubmit)="doSearch()"
+                      role="search" class="navbar-form navbar-left">
+                      <div class="input-group" style="font-size: 9pt;line-height: 0px;padding:3px 0px; width:390px">
+
+                        <div class="input-group">
+                          <input id="txtConSearch" name="txtConSearch" required="required" minlength="1"
+                            [(ngModel)]="this.searchModel.key" ngModel #txtConSearch="ngModel"
+                            class="form-control py-2 rounded-pill mr-1 pr-5" type="search" autocomplete="off"
+                            style="background-color:#f7f9fa;" placeholder="Start typing a name and hit enter key...">
+
+                          <span class="input-group-append">
+                            <button class="btn rounded-pill border-0 ml-n5" type="button">
+                              <i class="fa fa-search"></i>
+                            </button>
+                          </span>
+
+                        </div>
+                      </div>
+
+                      @if (txtConSearch.errors && (txtConSearch.dirty || txtConSearch.touched)) {
+                      <div>
+                        @if (txtConSearch.errors['required']) {
+                        <span style="font-size:10pt; text-align:left;" class="errorMessage msg_color">
+                          You must enter at least be 1 character.
+                        </span>
+                        }
+                      </div>
+                      }
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <div *ngIf="spinner" style="padding-left:0px;padding-top:5px; font-size:8pt;display:block">
+            <i class="fas fa-spinner fa-spin"></i>&nbsp;Working...
+          </div>
+
+          <div *ngIf="this.contactCnt==0 && searchModel.key!='';else showContactsList_Content">
+            There are no contacts found to display.
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- show contacts list poppup template -->
+<ng-template #showContactsList_Content>
+  @if (this.contactCnt>0) {
+  <div style="padding-left:0px;padding-top:7px; padding-bottom:5px; display:block">
+    {{this.contactCnt}}&nbsp;contact(s) found.
+  </div>
+  }
+  <div id="tbMsgPartialDiv" style="background-color: white; overflow-x: auto; height: 350px">
+    <table
+      style="width: 350px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:11pt">
+      <tbody>
+        <tr *ngFor="let res of contactInfoList" style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+
+          <td
+            style="width: 40px; text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <a [routerLink]="['/members/view-profile/show-profile']" [queryParams]="{memberID:res.contactID}"
+              style="border:none">
+              <img src="{{this.memberImagesUrlPath}}{{res.picturePath}}"
+                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+            </a>
+          </td>
+          <td style="vertical-align: top; text-align: left;vertical-align:top;padding-top:10px; padding-bottom:10px"
+            class="textfonts10pt">
+            <a id="lbSName" [routerLink]="['/members/view-profile/show-profile']"
+              [queryParams]="{memberID:res.contactID}" href="">{{res.friendName}}</a>
+            <br />
+            @if (res.titleDesc != '') {
+            <span id="lblTitle" style="color:Gray;font-size:10pt;">
+              {{res.titleDesc}}
+              <br>
+            </span>
+            }
+            @if (res.labelText == 'Add as Contact') {
+            <a style="font-size:10pt" id="lblAccept" href="#"
+              (click)="addSearchContactPopup(res.contactID, res.friendName, 'search')">Add as Contact
+            </a>
+            }
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+  </div>
+</ng-template>
+
+<!-- template for add modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Requesting to Add Contact</h5>
+        <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm='ngForm'>
+          <p>
+            {{this.contactName}}&nbsp; will have to confirm your request. Are you sure you want to send this
+            contact request?
+          </p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendRequest()">
+          @if (spinner) {
+          <i class='fas fa-spinner fa-spin'></i> Sending...
+          }
+          @else {
+          Send Request
+          }
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

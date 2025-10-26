@@ -1,0 +1,50 @@
+<div>
+  <form class="form-horizontal" name="asSecQuestionsForm" #asSecQuestionsForm='ngForm'
+    (ngSubmit)="saveASSecQuestions()">
+
+    <div>
+      In case you ever need our help (such as forgetting your password), we will use this to identify you as the account
+      owner. <br>
+    </div>
+    <br>
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Question:</b>
+      <br />
+      <select name="ddlQuestion" #ddlQuestion="ngModel" id="ddlQuestion" [(ngModel)]="asModel.securityQuestion"
+        onchange="return OnSectorChange();" appSelectValidator="select" style=" width:320px;height:29px;padding-top:1px"
+        class="form-control" required ngModel>
+        <option value="select">Select Question...</option>
+        <option value="1">Who was your first love?</option>
+        <option value="2">Who was your favorite teacher?</option>
+        <option value="3">What is your mother's name?</option>
+        <option value="4">What was the name of your first pet?</option>
+        <option value="5">What neighborhood did your grow up on?</option>
+        <option value="6">What is your father's nick name?</option>
+      </select>
+      <div *ngIf="ddlQuestion.errors && (ddlQuestion.dirty || ddlQuestion.touched)">
+        <span class="help-bpx" style="color:red" *ngIf="ddlQuestion.touched && ddlQuestion.invalid">Security question
+          required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Answer:</b>
+      <br />
+      <input name="txtAnswer" #txtAnswer="ngModel" type="text" id="txtAnswer" [(ngModel)]="asModel.securityAnswer"
+        placeholder="Enter answer" class="form-control" style=" width:320px;height:29px;padding-top:1px" required
+        ngModel />
+      <div *ngIf="txtAnswer.errors && (txtAnswer.dirty || txtAnswer.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtAnswer.errors['required']">Your answer is required.</span>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" id="saveASSecQuestions" [disabled]="!asSecQuestionsForm.valid || isSaving"
+        class="btn btn-primary btn-md">
+        <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Save"}}</button>
+    </div>
+    <div style="padding-bottom:60px">
+      <span style="color:green">{{isSecQuestSuccess ? "Saved sucessfully." : ""}}</span>
+    </div>
+  </form>
+</div>

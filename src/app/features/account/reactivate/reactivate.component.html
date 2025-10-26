@@ -1,0 +1,97 @@
+<body class="image-bg">
+  <form #reactivateForm='ngForm' (ngSubmit)="reactivateUser()">
+    <div class="h-50  bg-animation">
+      <div class="d-flex h-50 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-md-8">
+          <div class="modal-dialog w-100 mx-auto">
+            <div class="modal-content modal_radius">
+              <div class="modal-body">
+                <div class="mx-auto mb-3 logo_div"><img src="/images/logo100.jpg" class="logo_size"></div>
+                <div class="h5 modal-title text-center">
+                  <h5 class="mt-2">
+                    Reactivate Account
+                  </h5>
+                  <h6 class="mt-1 mb-0 opacity-8"><span>Use the form below to reactivate your existing account.</span>
+                  </h6>
+                  <div class="divider"></div>
+
+                  @if (this.result =='notfound') {
+                  <div class="h6 text-center">
+                    <table>
+                      <tr>
+                        <td id="errMsgTD" class="incorrect_cred_header">
+                          <b>Incorrect Email/Password combination.</b>
+                          <br />
+                          <span class='incorrect_cred_msg'>
+                            The password and email address you entered don't
+                            match. Passwords are case sensitive, so remember to check your CAPS lock key.
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  }
+                  <div class="modal-body">
+                    <div>
+                      <div class="row">
+                        <div class="col-md-12">
+
+                          <div tabindex="-1">
+                            <!-- label for="exampleEmail">Email</label -->
+
+                            <div id="exampleInputGroup1" role="group"
+                              aria-describedby="exampleInputGroup1__BV_description_" class="form-group">
+                              <div>
+                                <input autocomplete="off" name="txtEmail" id="txtEmail" type="email"
+                                  placeholder="Enter email..." required="required" email ngModel #txtEmail="ngModel"
+                                  [(ngModel)]="login.email" aria-required="true" class="form-control"
+                                  aria-describedby="exampleInputGroup1__BV_description_">
+                                @if (txtEmail.touched && !txtEmail.valid) {
+                                <span style="font-size:10pt;" class="errorMessage msg_color">
+                                  Valid email is required.
+                                </span>
+                                }
+                              </div>
+                            </div>
+                            <div id="exampleInputGroup2" role="group"
+                              aria-describedby="exampleInputGroup2__BV_description_" class="form-group">
+                              <div>
+                                <input autocomplete="off" name="txtPassword" id="txtPassword" type="password"
+                                  placeholder="Enter password..." required="required" ngModel #txtPassword="ngModel"
+                                  [(ngModel)]="login.password" aria-required="true" class="form-control">
+
+                                @if (txtPassword.touched && !txtPassword.valid) {
+                                <span style="font-size:10pt;" class="errorMessage msg_color">
+                                  Password is required.
+                                </span>
+                                }
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="modal-footer clearfix">
+                    <div class="float-right">
+                      <button type="submit" id="btnReset" [disabled]="!reactivateForm.valid || isLoading"
+                        class="btn btn-primary btn-md">
+                        @if (isLoading) {
+                        <i class='fa fa-spinner fa-spin'></i> Please wait...
+                        } @else {
+                        Reactivate
+                        }
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</body>

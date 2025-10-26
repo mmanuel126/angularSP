@@ -1,0 +1,144 @@
+<div>
+    <form class="form-horizontal" name="contactInfoForm" #contactInfoForm='ngForm'
+      (ngSubmit)="saveContactInfo()">
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Email:</b>
+        <br />
+        <input name="txtEmail" #txtEmail="ngModel" type="text" id="txtFirstName" [(ngModel)]="this.contactInfoModel.email"
+          placeholder="Enter Email" class="form-control" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:10px" >
+        <span class="basicInfoDataOther"><input id="chkShowEmail" #chkShowEmail="ngModel"
+            [(ngModel)]=" this.contactInfoModel.showEmailToMembers" type="checkbox" name="chkShowEmail" /><label
+            for="chkShowEmail">&nbsp;Show this to other members</label></span>
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Other&nbsp;Email:</b>
+        <br />
+        <input name="txtOtherEmail" #txtOtherEmail="ngModel" type="text" id="txtOtherEmail"
+          [(ngModel)]=" this.contactInfoModel.otherEmail" Placeholder="Enter Other Email" class="form-control" />
+      </div>
+  
+      <div>
+        <hr style="color:darkgray; border:solid 1px #e7eadf">
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Facebook:</b>
+        <br />
+        <input name="txtFacebook" #txtFacebook="ngModel" type="text" id="txtFacebook"
+          [(ngModel)]=" this.contactInfoModel.facebook" placeholder="Enter Facebook link" class="form-control" ngModel />
+      </div>
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Instagram:</b>
+        <br />
+        <input name="txtInstagram" #txtInstagram="ngModel" type="text" id="txtInstagram"
+          [(ngModel)]=" this.contactInfoModel.instagram" placeholder="Enter Instagram link" class="form-control"
+          ngModel />
+      </div>
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Twitter Handle:</b>
+        <br />
+        <input name="txtTwitter" #txtTwitter="ngModel" type="text" id="txtTwitter"
+          [(ngModel)]=" this.contactInfoModel.twitter" placeholder="Enter Twitter handle" class="form-control" ngModel />
+      </div>
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Website Url:</b>
+        <br />
+        <input name="txtWebsite" #txtWebsite="ngModel" type="text" id="txtWebsite"
+          [(ngModel)]=" this.contactInfoModel.website" placeholder="Enter website Url" class="form-control" ngModel />
+      </div>
+  
+      <div>
+        <hr style="color:darkgray; border:solid 1px #e7eadf">
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Cell&nbsp;Phone:</b>
+        <br />
+        <input name="txtCellPhone" #txtCellPhone="ngModel" type="text" id="txtCellPhone"
+          [(ngModel)]=" this.contactInfoModel.cellPhone" placeholder="Enter Cell Phone" class="form-control"
+          style="width:200px" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:10px" >
+        <span class="basicInfoDataOther"><input id="chkShowCellPhone" #chkShowCellPhone="ngModel"
+            [(ngModel)]=" this.contactInfoModel.showCellPhone" type="checkbox" name="chkShowCellPhone" /><label
+            for="chkShowCellPhone">&nbsp;Show cell phone to other
+            members</label></span>
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Home&nbsp;Phone:</b>
+        <br />
+        <input name="txtHomePhone" #txtHomePhone="ngModel" type="text" id="txtHomePhone"
+          [(ngModel)]=" this.contactInfoModel.homePhone" placeholder="Enter Home Phone" class="form-control"
+          style="width:200px" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:10px" >
+        <span class="basicInfoDataOther"><input id="chkShowHomePhone" #chkShowHomePhone="ngModel"
+            [(ngModel)]=" this.contactInfoModel.showHomePhone" type="checkbox" name="chkShowHomePhone" /><label
+            for="chkShowHomePhone">&nbsp;Show home phone to other
+            members</label></span>
+      </div>
+  
+      <div>
+        <hr style="color:darkgray; border:solid 1px #e7eadf">
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Address:</b>
+        <br />
+        <input name="txtAddress" #txtAddress="ngModel" type="text" id="txtAddress"
+          [(ngModel)]=" this.contactInfoModel.address" placeholder="Enter Address" class="form-control" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:10px" >
+        <span class="basicInfoDataOther"><input id="chkShowAddress" #chkShowAddress="ngModel"
+            [(ngModel)]=" this.contactInfoModel.showAddress" type="checkbox" name="chkShowAddress" /><label
+            for="chkShowAddress">&nbsp;Show address to other members</label></span>
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>City:</b>
+        <br />
+        <input name="txtCity" #txtCity="ngModel" type="text" id="txtCity" [(ngModel)]=" this.contactInfoModel.city"
+          placeholder="Enter City" class="form-control" style="width:250px" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px">
+        <b>State:</b>
+        <br />
+        <input name="txtState" #txtState="ngModel" type="text" id="txtState" [(ngModel)]=" this.contactInfoModel.state"
+          placeholder="Enter State" class="form-control" style="width:200px" ngModel />
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px" >
+        <b>Zip&nbsp;Code:</b>
+        <br />
+        <input name="txtZipCode" #txtZipCode="ngModel" type="text" id="txtZipCode"
+          [(ngModel)]=" this.contactInfoModel.zip" placeholder="Enter Zip Code" class="form-control" style="width:200px"
+          ngModel />
+      </div>
+  
+      <div>
+        <hr style="color:darkgray; border:solid 1px #e7eadf">
+      </div>
+  
+      <div>
+        <button type="submit" id="saveContactInfo" [disabled]="isSaving" class="btn btn-primary btn-md">
+          <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving
+          ? "Saving..." : "Save"}}</button>
+      </div>
+      <div style="padding-bottom:60px">
+        <span style="color:green">{{isSuccess ? "Saved sucessfully." : ""}}</span>
+      </div>
+  
+      <div class="clearfix"></div>
+    </form>
+  </div>
+  

@@ -1,0 +1,70 @@
+<div class="container-fluid">
+  <div class="card-hover-shadow-2x mb-3 card modal_radius" style="padding:10px">
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-sm text-capitalize font-weight-bold">
+        <i class="header-icon lnr-lighter icon-gradient bg-amy-crisp"> </i>
+        Suggested for you
+      </div>
+    </div>
+    <div class="scroll-area-lg" style="height:600px; overflow:auto">
+      <table
+        style="width: 350px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:10pt">
+        <tbody>
+          @for (res of contactInfoList; track res.contactID) {
+          <tr style="border-bottom: solid 1px; border-bottom-color: #DBDBDB;">
+
+            <td
+              style="width: 40px; text-align: left; cursor: pointer; vertical-align: top; padding-top: 6px; padding-right: 4px"
+              class="textfonts8pt">
+              <a href="" [routerLink]="['/members/view-profile/show-profile']"
+                [queryParams]="{ memberID: res.contactID }" style="border: none">
+                <img src="{{ this.memberImagesUrlPath }}{{ res.picturePath }}"
+                  style="color: #596A7D; border-color: LightGrey; border-width: 1px; border-style: None; height: 40px; width: 40px; border-radius: 50%" />
+              </a>
+            </td>
+
+            <td style="vertical-align: top; text-align: left; padding-bottom: 10px;">
+              <a id="lbSName" href="#" [routerLink]="['/members/view-profile/show-profile']"
+                style="width: 400px; font-weight: bold" [queryParams]="{ memberID: res.contactID }">
+                {{ res.friendName }}
+              </a>
+              <br />
+
+              <span id="lblTitle" style="color: Black; font-size: 9pt;">
+                {{ res.titleDesc == '' ? 'Unknown Title' : res.titleDesc }}
+              </span>
+              <br />
+
+              @if (res.labelText == 'Add as Contact') {
+              <span>
+                <a style="font-size: 9pt" id="lblConnect" title="Add this person as a contact." href=""
+                  data-toggle="modal" data-target="#connectModal" (click)="jumpConnectMember(res.contactID)">
+                  Add as Contact
+                  @if (this.connectionID == res.contactID) {
+                  <i id="prgPost{{ res.contactID }}" class="fa fa-spinner fa-spin"></i>
+                  }
+                  <br />
+                </a>
+              </span>
+              }
+
+              @if (res.showFollow == 'true') {
+              <span>
+                <a style="font-size: 9pt" id="lblFollowMember" title="Follow this person to stay connected." href=""
+                  data-toggle="modal" data-target="#followModal" (click)="doFollowMember(res.contactID)">
+                  Follow this Member
+                  @if (this.connectionID == res.contactID) {
+                  <i id="prgFollow{{ res.contactID }}" class="fa fa-spinner fa-spin"></i>
+                  }
+                </a>
+              </span>
+              }
+              <br />
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

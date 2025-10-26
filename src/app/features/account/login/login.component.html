@@ -1,0 +1,93 @@
+<body class="image-bg">
+  <form #loginForm='ngForm' (ngSubmit)="loginUser()">
+    <div class="h-50  bg-animation">
+      <div class="d-flex h-50 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-md-60">
+          <br>
+          <div class="modal-dialog w-90 mx-auto">
+            <div class="modal-content modal_radius">
+              <div class="modal-body">
+
+                <div class="mx-auto mb-3 logo_div" style="width: 260px;"><img src="/images/logo100.jpg"
+                    class="logo_size">
+                </div>
+
+                <div id="exampleInputGroup1" role="group" aria-describedby="exampleInputGroup1__BV_description_"
+                  class="form-group">
+                  <div>
+                    <input autocomplete="off" name="txtEmail" id="txtEmail" type="email" placeholder="Enter email..."
+                      required="required" email ngModel #txtEmail="ngModel" [(ngModel)]="login.email"
+                      aria-required="true" class="form-control" aria-describedby="exampleInputGroup1__BV_description_">
+                    @if (txtEmail.touched && !txtEmail.valid) {
+                    <span class="errorMessage msg_color">
+                      Valid email is required.
+                    </span>
+                    }
+                  </div>
+                </div>
+
+                <div id="exampleInputGroup2" role="group" class="form-group">
+                  <div>
+                    <input autocomplete="off" name="txtPassword" id="txtPassword" type="password"
+                      placeholder="Enter password..." required="required" ngModel #txtPassword="ngModel"
+                      [(ngModel)]="login.password" aria-required="true" class="form-control">
+                    @if (txtPassword.touched && !txtPassword.valid) {
+                    <span class="errorMessage msg_color">
+                      Password is required.
+                    </span>
+                    }
+                  </div>
+                </div>
+
+                <div>
+                  <button type="submit" id="login" [disabled]="!loginForm.valid || isLoading"
+                    class="btn btn-primary btn-md btn-block">
+                    @if (isLoading) {
+                    <i class='fa fa-spinner fa-spin'></i> Logging. Please wait...
+                    }
+                    @else
+                    {
+                    Log in
+                    }
+                  </button>
+                </div>
+                @if (this.result =='notfound') {
+                <div class=" mx-auto text-center"
+                  style="width:250px; font-size:10pt; color:red; padding-bottom:5px; padding-top:5px">
+                  Sorry, we could not find your account. Please double-check your credential. Or if you recently signed
+                  up, please check your email to complete the registration.
+                </div>
+                }
+                @if (this.result =='deactivated') {
+                <div class="mx-auto text-center"
+                  style="width:250px; font-size:10pt; color:red; padding-bottom:5px; padding-top:5px">
+                  Your account was deactivated recently or sometime ago. To re-activate your account, please
+                  click<a [routerLink]="['/reactivate']">&nbsp;here</a>.
+                </div>
+                }
+                <div style="padding-top: 13px; padding-bottom: 5px; text-align: center;">
+                  <h6 class="mb-0">
+                    <a [routerLink]="['/forgotpwd']" class="btn-md btn btn-link">
+                      Forgot Password?
+                    </a>
+                  </h6>
+                </div>
+
+                <div style="padding-bottom: 7px; text-align: center; font-size:10pt">
+                  ---- OR ----
+                </div>
+
+                <div style="text-align: center; padding-bottom:20px">
+                  <h6 class="mb-0">
+                    Don't have an account?
+                    <a [routerLink]="['/register']" class="text-primary">Sign up</a>
+                  </h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>

@@ -1,0 +1,22 @@
+
+.form-group {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+input.form-control {
+    height:29px;
+    width:400px;
+    padding-top:1px;
+}
+select.form-control {
+   height:29px;
+   width:350px;
+   padding-top:1px;
+}
+
+@media (min-width: 992px) {
+    .user-enabled {
+        margin-left: 40px;
+    }
+}

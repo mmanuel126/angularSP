@@ -1,0 +1,477 @@
+<body class="image-bg spscroll">
+  <form #registerForm='ngForm' (ngSubmit)="registerUser()">
+    <div class="h-50  bg-animation">
+      <div class="d-flex h-50 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-md-8">
+
+          <div class="modal-dialog w-100 mx-auto">
+            <div class="modal-content modal_radius">
+              <div class="modal-body">
+
+                <div class="h5 modal-title text-center">
+                  <div class="mx-auto mb-3 logo_div"><img src="/images/logo100.jpg" class="logo_size">
+                  </div>
+                  <h6 class="mt-2">
+                    <span>It only takes a <span class="text-success">few seconds</span> to create your account</span>
+                  </h6>
+                  <div class="divider"></div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div id="firstName" role="group" class="form-group" aria-describedby="firstName__BV_description_">
+                        <div style=" text-align:left">
+                          <input autocomplete="off" name="txtFirstName" id="txtFirstName" type="text"
+                            placeholder="Enter first name..." required="required" ngModel #txtFirstName="ngModel"
+                            aria-required="true" [(ngModel)]="register.firstName" class="form-control"
+                            aria-describedby="firstName__BV_description_">
+                          @if (txtFirstName.touched && !txtFirstName.valid) {
+                          <span style="font-size:10pt;" class="errorMessage msg_color">
+                            First name is required.
+                          </span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div id="lastName" role="group" class="form-group" aria-describedby="lastName__BV_description_">
+                        <div style="text-align:left;">
+                          <input autocomplete="off" name="txtLastName" id="txtLastName" type="text"
+                            placeholder="Enter last name..." required="required" ngModel #txtLastName="ngModel"
+                            aria-required="true" [(ngModel)]="register.lastName" class="form-control"
+                            aria-describedby="lastName__BV_description_">
+                          @if (txtLastName.touched && !txtLastName.valid) {
+                          <span style="font-size:10pt;" class="errorMessage msg_color">
+                            Last name is required.
+                          </span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="email" role="group" aria-describedby="email__BV_description_" class="form-group">
+                    <div style="text-align: left;">
+                      <input id="txtEmail" autocomplete="off" name="txtEmail" type="email" placeholder="Enter email..."
+                        required="required" ngModel #txtEmail="ngModel" [(ngModel)]="register.email"
+                        aria-required="true" class="form-control" aria-describedby="email__BV_description_">
+
+                      @if (txtEmail.touched && !txtEmail.valid) {
+                      <span style="font-size:10pt;" class="errorMessage msg_color">
+                        Valid email is required.
+                      </span>
+                      }
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div id="password" role="group" class="form-group" aria-describedby="password__BV_description_">
+                        <div style=" text-align:left">
+                          <input autocomplete="off" name="txtPassword" id="txtPassword" type="password"
+                            placeholder="Enter password..." required="required" ngModel #txtPassword="ngModel"
+                            aria-required="true" minlength="5" validateEqual="txtRepPassword" reverse="true"
+                            [(ngModel)]="register.password" class="form-control"
+                            aria-describedby="password__BV_description_">
+                          @if (txtPassword.errors && (txtPassword.dirty || txtPassword.touched)) {
+                          <div>
+                            @if (txtPassword.errors['required']) {
+                            <span style="font-size:10pt;" class="errorMessage msg_color">
+                              Password is required.
+                            </span>
+                            }
+                            @if (txtPassword.errors['minlength']) {
+                            <span style="font-size:10pt;" class="errorMessage msg_color">
+                              Password must at least be 5 characters.
+                            </span>
+                            }
+
+                          </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div id="repPassword" role="group" class="form-group"
+                        aria-describedby="repPassword__BV_description_">
+                        <div style=" text-align:left">
+                          <input autocomplete="off" name="txtRepPassword" id="txtRepPassword" type="password"
+                            placeholder="Re-enter password..." required="required" ngModel #txtRepPassword="ngModel"
+                            aria-required="true" validateEqual="txtPassword" [(ngModel)]="register.confirmPwd"
+                            class="form-control" aria-describedby="repPassword__BV_description_">
+
+                          @if (txtRepPassword.errors && (txtRepPassword.dirty || txtRepPassword.touched)) {
+                          <div style="text-align:left">
+                            @if (txtRepPassword.errors['required']) {
+                            <span style="font-size:10pt;" class="errorMessage msg_color">
+                              Re-enter Password is required.
+                            </span>
+                            }
+                            @if (txtRepPassword.errors && !txtRepPassword.errors['required']) {
+                            <span style="font-size:10pt;" class="errorMessage msg_color">
+                              Re-enter password must match password.
+                            </span>
+                            }
+                          </div>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="top:0px">
+                    <div class="col-md-5">
+                      <div id="gender" role="group" class="form-group"
+                        [class.has-error]="optGender.touched && optGender.invalid"
+                        aria-describedby="gender__BV_description_">
+                        <div style="text-align:left">
+                          <span style="text-align:left">
+                            <h6>Gender:</h6>
+                          </span>
+                          <select name="optGender" id="optGender" class="form-control" required="required"
+                            [(ngModel)]="register.gender" #optGender="ngModel" ngModel appSelectValidator="select"
+                            style="width:auto;padding-top:1px" aria-describedby="gender__BV_description_">
+                            <option value="select">Select</option>
+                            @for (gender of genders; track gender) {
+                            <option [value]="gender">{{gender}}</option>
+                            }
+                          </select>
+                          @if (optGender.touched && optGender.invalid) {
+                          <span class="errorMessage msg_color" style="font-size:10pt;">
+                            Gender is required.
+                          </span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div id="dob" role="group" class="form-group">
+                        <div>
+                          <span style="text-align:left">
+                            <h6>Birth Date:</h6>
+                          </span>
+                          <table>
+                            <tr>
+                              <td>
+                                <div class="form-group" id="ddlmonth"
+                                  [class.has-error]="ddlMonth.touched && ddlMonth.invalid"
+                                  aria-describedby="ddlmonth__BV_description_">
+                                  <select name="ddlMonth" id="ddlMonth" class="form-control"
+                                    [(ngModel)]="register.month" required="required" #ddlMonth="ngModel" ngModel
+                                    appSelectValidator="Month" style="width:auto;padding-top:1px">
+                                    <option value="Month">Month</option>
+                                    <option value="1">Jan</option>
+                                    <option value="2">Feb</option>
+                                    <option value="3">Mar</option>
+                                    <option value="4">Apr</option>
+                                    <option value="5">May</option>
+                                    <option value="6">Jun</option>
+                                    <option value="7">Jul</option>
+                                    <option value="8">Aug</option>
+                                    <option value="9">Sep</option>
+                                    <option value="10">Oct</option>
+                                    <option value="11">Nov</option>
+                                    <option value="12">Dec</option>
+                                  </select>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-group" id="ddlday" [class.has-error]="ddlDay.touched && ddlDay.invalid"
+                                  aria-describedby="ddlday__BV_description_">
+
+                                  <select name="ddlDay" id="ddlDay" [(ngModel)]="register.day" class="form-control"
+                                    required="required" #ddlDay="ngModel" ngModel appSelectValidator="Day"
+                                    style="width:auto;padding-top:1px">
+                                    <option value="Day">Day</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                  </select>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="form-group" id="ddlyear"
+                                  [class.has-error]="ddlYear.touched && ddlYear.invalid"
+                                  aria-describedby="ddlyear__BV_description_">
+                                  <select name="ddlYear" id="ddlYear" [(ngModel)]="register.year" class="form-control"
+                                    required="required" #ddlYear="ngModel" ngModel appSelectValidator="Year"
+                                    style="width:auto;padding-top:1px">
+                                    <option value="Year">Year</option>
+                                    @for (year of years; track year) {
+                                    <option [value]="year">
+                                      {{year}}
+                                    </option>
+                                    }
+                                  </select>
+                                </div>
+                              </td>
+                            </tr>
+                          </table>
+                          @if ((ddlMonth.touched && ddlMonth.invalid) || (ddlDay.touched && ddlDay.invalid) ||
+                          (ddlYear.touched && ddlYear.invalid)) {
+                          <span style="font-size:10pt;" class="errorMessage msg_color">
+                            Month, day, and year is required.
+                          </span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-5">
+                      <div id="profileType" role="group" class="form-group"
+                        [class.has-error]="optPT.touched && optPT.invalid" aria-describedby="profile__BV_description_">
+                        <div style="text-align:left">
+                          <span style="text-align:left; ">
+                            <h6>Profile Type:</h6>
+                          </span>
+                          <select name="optPT" id="optPT" class="form-control" required="required"
+                            [(ngModel)]="register.profileType" #optPT="ngModel" ngModel appSelectValidator="select"
+                            style="width:auto;padding-top:1px" aria-describedby="profile__BV_description_">
+                            <option value="select">Select</option>
+                            @for (profile of profileTypes; track profile) {
+                            <option [value]="profile">{{profile}}</option>
+                            }
+                          </select>
+                          @if (optPT.touched && optPT.invalid) {
+                          <span class="errorMessage msg_color" style="font-size:10pt;">Profile type is required.
+                          </span>
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="custom-control custom-checkbox">
+                    <h6 style="padding-bottom:5px">
+                      <input id="termsCheck" name="termsCheck" type="checkbox" (change)="terms =! terms"
+                        autocomplete="off" class="custom-control-input" value="true"><label for="termsCheck"
+                        class="custom-control-label">
+                        Accept our <a href="#" data-toggle="modal" data-target="#lgTermsModal">Terms and Conditions</a>.
+                      </label>
+                    </h6>
+                  </div>
+                  <div class="divider"></div>
+                  <h6 class="mb-0" style="padding-bottom:5px">
+                    Already have an account?
+                    <a [routerLink]="['/']" class="text-primary">Sign in</a>
+                    |
+                    <a [routerLink]="['/forgotpwd']" class="text-primary">
+                      Recover Password
+                    </a>
+                  </h6>
+                </div>
+
+                <div>
+                  <table style="width:400px;" align="center" border="0">
+                    @if (showErrMsg) {
+                    <tr>
+                      <td style="color:red">
+                        The email you entered already exists on {{this.appLogoText}}. You may have already created an
+                        account. Try to recover the password or use a different email!
+                      </td>
+                    </tr>
+                    }
+                  </table>
+                </div>
+
+                <div class="modal-footer d-block text-center">
+                  <button type="submit" id="register" [disabled]="!registerForm.valid || show || !terms"
+                    class="btn btn-wide btn-pill btn-shadow btn-hover-shine btn-primary btn-md">
+                    @if (show) {
+                    <i class='fa fa-spinner fa-spin'></i> Creating Account. Please wait...
+                    }
+                    @else {
+                    Create Account
+                    }
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+
+<!-- template for terms popup -->
+<div class="modal fade" id="lgTermsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Terms of Use</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-weight:normal; font-size:10pt">
+          {{this.companyName}} is a social networking service. By using
+          it, you signify that you have read, understand, and agree to be bound by the following
+          Terms of Use or Agreement.
+        </p>
+        <p style="font-size: 8pt">
+          <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+            <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+              Basic Terms
+            </h3>
+          </span>
+
+        </p>
+        <ol style="font-size:10pt">
+          <li>
+            <p>You must be 15 years or older to use the Site.</p>
+          </li>
+
+          <li>
+            <p>You must maintain the security of your password and identification.</p>
+          </li>
+
+          <li>
+            <p>You are fully responsible for any actions that take place using your account.</p>
+          </li>
+
+          <li>
+            <p>You must not upload, post, transmit, share, or store any content that we deem to
+              be harmful, abusive, inflammatory, harassing, vulgar, obscene, fraudulent, or intimidating
+              to other Members.</p>
+          </li>
+
+          <li>
+            <p>You may not use the Site for any illegal or unauthorized purpose such as infringement
+              upon the rights of any third party, including copyright, trademark, privacy, publicity
+              or other personal or proprietary rights; or contain libelous, defamatory or otherwise
+              unlawful material.</p>
+          </li>
+
+          <li>
+            <p>You are solely responsible for your conduct and any information, graphics, photos,
+              video, and links that you submit, post, and display on the Site.</p>
+          </li>
+
+          <li>
+            <p>You must not create or submit unwanted email (spam) to our members.</p>
+          </li>
+
+          <li>
+            <p>You must not transmit any computer viruses or any script logic that could lead to
+              destruction of the Site.</p>
+          </li>
+
+          <li>
+            <p>You must not violate any laws of any third party web sites. We prohibit users from
+              uploading, posting or otherwise transmitting on our Site any materials that violate
+              another party's property rights. When we receive proper Notification of alleged
+              copyright infringement, we will promptly remove or disable access to the allegedly
+              infringing material and terminate the accounts of the infringer.</p>
+          </li>
+        </ol>
+        <p style="font-size: 8pt">
+          <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+            <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+              General Terms
+            </h3>
+          </span>
+        </p>
+        <ol style="font-size:10pt">
+          <li>
+            <p>{{this.companyName}} reserves the right to modify or terminate the content of the Site
+              at any time for any reason without any notification.</p>
+          </li>
+
+          <li>
+            <p>{{this.companyName}} reserves the right to change the Terms of Use at any time. If any
+              changes should occur, we will post the changes to these Terms of Use on this page
+              and will indicate at the bottom of this page the date last modified.</p>
+          </li>
+
+          <li>
+            <p>We reserve the right to refuse service to anyone for any reason at any time in accordance
+              with any applicable laws.</p>
+          </li>
+
+          <li>
+            <p>We may remove content or membership accounts that we determine in our sole discretion
+              are unlawful, offensive, threatening, obscene, or otherwise violates any party's
+              intellectual property or these Term of Use.</p>
+          </li>
+
+          <li>
+            <p>We reserve the right to reclaim names on behalf of businesses or individuals that
+              hold legal claim or trademark on those names.</p>
+          </li>
+        </ol>
+        <p style="font-size: 8pt">
+          <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+            <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+              Copyright
+            </h3>
+          </span>
+        </p>
+        <p style="font-size: 10pt">
+          All content on the web Site including text, graphics, pictures, videos, information,
+          applications, software, music, sound and other files, are the proprietary property
+          of {{this.companyName}}, its users or its licensors with all rights reserved. No Site
+          content may be modified, copied, distributed, framed, reproduced, republished, downloaded,
+          displayed, posted, transmitted, or sold in any form or by any means, in whole or
+          in part, without prior written permission of {{this.companyName}}, except that the foregoing
+          does not apply to your own content as defined below that you legally post on the
+          Site.
+        </p>
+        <br />
+        <p style="font-size: 8pt">
+          <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+            <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+              User Content
+            </h3>
+          </span>
+        </p>
+        <p style="font-size: 10pt">
+          You are solely responsible for the photos, profiles, messages, notes, text, information,
+          music, video, advertisements, listings, and other content that you upload, publish
+          or display on {{this.companyName}}, or transmit to or share with other users. You may
+          not post, transmit, or share user content on {{this.companyName}} that you did not create
+          or that you do not have permission. You understand and agree that {{this.companyName}}
+          may, but is not obligated to, review and delete (without notice) any Site content
+          or user content in its sole discretion, for any reason or no reason, including user
+          content that in the sole judgment of {{this.companyName}} violates this Agreement or
+          which might be offensive, illegal, or that might violate the rights, harm, or threaten
+          the safety of users or others.
+        </p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

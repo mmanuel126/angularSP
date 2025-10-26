@@ -1,0 +1,459 @@
+<div class="row">
+  <div class="col-sm-14 col-md-12">
+    <div class="mb-3 card" style="padding:10px">
+      <div class='col-sm-14 col-lg-25' style="padding:10px;">
+        <div class="container">
+          <!-- member name and title -->
+          <table style="width: 100%">
+            <tr>
+              <td style="text-align:left; width:50px;padding-top:5px">
+                <img id="memberImg" style="border-radius:50%" width="50px" height="50px" src="{{this.memImage}}">
+              </td>
+              <td height="25px" style="padding-top:5px;color: #484830; vertical-align: middle; text-align: left;padding-left:6px;
+                text-align: left;">
+                <b>{{this.memName}}</b><br>{{this.memTitle}}
+              </td>
+            </tr>
+          </table>
+          <br>
+          <!-- tabs -->
+          <mat-tab-group [selectedIndex]="this.defaultTab" class="custom-tabs">
+            <!-- basic info tab -->
+            <mat-tab label="Basic Info.">
+              <br>
+              <app-user-info></app-user-info>
+            </mat-tab>
+            <!-- contact info -->
+            <mat-tab label="Contact Info.">
+              <br>
+              <app-contact-info></app-contact-info>
+            </mat-tab>
+            <!-- education tab -->
+            <mat-tab label="Education">
+              <br>
+              <div>
+                <div>
+                  <a title="Add a school you attended." data-toggle="modal" data-target="#addModal"
+                    style="color:#0066CC;font-size:10pt;font-weight:normal;text-decoration:none;cursor:pointer">
+                    <i class="fa  fa-plus" style="color:black"></i>&nbsp;Add School
+                  </a>
+                </div>
+                <div>
+                  <hr style="color:darkgray; border:solid 1px #e7eadf">
+                </div>
+                <div>
+                  <span *ngIf="noSchools">No education information.</span>
+                  <table style="text-align: left;padding-bottom:10px" border="0">
+                    <tr *ngFor="let res of educationInfoModel"
+                      style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+                      <td style="width: 50px; text-align: left; cursor:pointer;vertical-align:top; padding-top:6px"
+                        class="textfonts8pt;">
+                        <a (click)="goToLink(res.webSite)">
+                          <img src="{{res.schoolImage}}"
+                            style="color:#596A7D;border-color:LightGrey;border-width:1px;height:50px;width:50px;border-radius:50%" />
+                        </a>
+                      </td>
+                      <td style="vertical-align: top; text-align: left; width: 100%;vertical-align:top"
+                        class="textfonts10pt">
+                        <a id="lbInstName" (click)="goToLink(res.webSite)" href=""
+                          style="font-weight:normal;">{{res.schoolName}}</a>
+                        <br />
+                        <span id="lblAddress" class="textfonts10pt" style="color:#484830;">{{res.schoolAddress}}</span>
+                        <br />
+                        <span id="lblClassMajor" class="textfonts10pt" style="color:#484830;">
+                          {{res.yearClass}} -
+                          {{res.major}}
+                        </span>
+                        <br />
+                        <span id="lblDegree" class="textfonts10pt" style="color:Gray;">{{res.degree}}</span>
+                        <br />
+                        <span *ngIf="res.sportLevelType!=''" id="llbPlayed" class="" style="color:Gray;">
+                          Competion level
+                          played:&nbsp;{{res.sportLevelType}}
+                        </span>
+                        <br />
+                        <a (click)="jumpToEditSchool(res.schoolID, res.schoolName,res.major, res.degreeTypeID, res.yearClass, res.sportLevelType, res.schoolType);"
+                          id="lbEdit"
+                          style="color:#0066CC;font-size:10pt;font-weight:normal;text-decoration:none;cursor:pointer"
+                          title="Edit information on this school you attended."><i class="fa fa-edit"
+                            style="color:black"></i>Edit</a>
+                        <span id="lblBreak">&nbsp;|&nbsp;</span>
+                        <a (click)="jumpToRemoveSchool(res.schoolID, res.schoolType, res.schoolName);" id="lbRemove"
+                          style="color:#0066CC;font-size:10pt;font-weight:normal;text-decoration:none;cursor:pointer"
+                          title="Remove this from your list of attended schools.">
+                          <i class="fa fa-trash-alt"></i>Remove
+                        </a><br /><br />
+                      </td>
+                      <td style="vertical-align: top; text-align: Right; width: 20%;" class="textfonts10pt;  "></td>
+                    </tr>
+                  </table>
+                </div>
+                <div style="padding-bottom:100px"></div>
+              </div>
+            </mat-tab>
+            <!-- photos tab -->
+            <mat-tab label="Photos">
+              <br />
+              <br>
+              SportProfiles uses a member's public instagram posts to show their images.
+              In order for this feature to work, you will need to do the following:
+              <br><br>
+              <p><b>Go to instagram.com and do:</b></p>
+              <ol>
+                <li>Create or use an existing instagram account.</li>
+                <li>Log into the account.</li>
+                <li>Add photos of yourself by creating public posts.</li>
+                <li>Note your instagram username and your instagram URL <b><u>(i.e., www.instagram.com/username)</u></b>
+                </li>
+              </ol>
+              <p><b>Return here and do:</b></p>
+              <ol>
+                <li>Enter or paste your instagram URL to the text box below.</li>
+                <li>
+                  Click the save button to store it in our system. We will use it to redirect people who wants to view
+                  your
+                  photos to instagram.
+                </li>
+              </ol>
+              <form class="form-horizontal" name="URLForm" #URLForm='ngForm' (ngSubmit)="saveInstagramURL()">
+                <div class="form-group" style="padding-bottom:15px">
+                  <b>Instagram URL:</b>
+                  <br />
+                  <input name="txtURL" #txtURL="ngModel" type="text" id="txtURL"
+                    placeholder="Enter your instagram URL (i.e., www.instagram.com/username)" class="form-control"
+                    required ngModel [(ngModel)]="this.instagramURL" />
+                  <div *ngIf="txtURL.errors && (txtURL.dirty || txtURL.touched)">
+                    <span class="help-bpx" style="color:red;" *ngIf="txtURL.errors['required']">
+                      Instagram URL is required.
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  &nbsp;<button type="submit" id="saveInstagramURL" [disabled]="!URLForm.valid || isSaving"
+                    class="btn btn-primary btn-md">
+                    <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Save"}}
+                  </button>
+                </div>
+                <div id="photosSuccess" style="padding-bottom:60px">
+                  <span style="color:green">{{isSuccess ? "Saved sucessfully." : ""}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </mat-tab>
+            <!-- videos tab -->
+            <mat-tab label="Videos">
+              <br>
+              SportProfiles uses a member's public youtube playlists to show and play their videos.
+              In order for this feature to work, you will need to do the following:
+              <br><br>
+              <p> <b>Go to Youtube.com and do:</b></p>
+              <ol>
+                <li>Create or use an existing youtube account.</li>
+                <li>Log into your account.</li>
+                <li>Click on the top far right circle with your 1 or 2 letters of your initial.</li>
+                <li>Select 'Channel' from the presented menu list.</li>
+                <li>Click on 'Customized Channel'</li>
+                <li>Use the 'Customize Channel' page to create and manage playlists and videos.</li>
+                <li>Click on the top far right circle with your 1 or 2 letters of your initial again.</li>
+                <li>Click on 'Settings' from the presented menu list.</li>
+                <li>Click on 'View Advance Settings' next.</li>
+                <li>Copy the 'Chanel ID' value string.</li>
+              </ol>
+              <p><b>Return here and do:</b></p>
+              <ol>
+                <li>Paste the 'Chanel ID' value string to the text box below.</li>
+                <li>
+                  Click the save button to store the Chanel ID in our system. We will use it to pull your playlist to
+                  show to others.
+                </li>
+              </ol>
+              <form class="form-horizontal" name="channelIDForm" #channelIDForm='ngForm' (ngSubmit)="saveChannelID()">
+                <div class="form-group" style="padding-bottom:15px">
+                  <b>Youtube Channel ID:</b>
+                  <br />
+                  <input name="txtChannelID" #txtChannelID="ngModel" type="text" id="txtChannelID"
+                    placeholder="Enter youtube channel ID" class="form-control" required ngModel
+                    [(ngModel)]="this.channelID" />
+                  <div *ngIf="txtChannelID.errors && (txtChannelID.dirty || txtChannelID.touched)">
+                    <span class="help-bpx" style="color:red;" *ngIf="txtChannelID.errors['required']">
+                      Channel ID is
+                      required.
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  &nbsp;<button type="submit" id="saveChannelID" [disabled]="!channelIDForm.valid || isSaving"
+                    class="btn btn-default" class="btn btn-primary btn-md">
+                    <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Save"}}
+                  </button>
+                </div>
+                <div id="videosSuccess" style="padding-bottom:60px">
+                  <span style="color:green">{{isSuccessVidSave ? "Saved sucessfully." : ""}}</span>
+                </div>
+                <div class="clearfix"></div>
+              </form>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modals -->
+<!-- Add new education modal-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Add New School</h5>
+        <button type="button" #closeAddButton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addNewSchoolForm='ngForm' (ngSubmit)="doAddNewSchool(addNewSchoolForm)">
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>Institution&nbsp;Type:</b>
+            <br />
+            <select autofocus name="ddlInstType" #ddlSchoolType #ddlInstType="ngModel" [(ngModel)]="eduInfo.schoolType"
+              id="ddlInstType" title="" class="form-control" style=" width:auto;padding-top:1px">
+              <option selected value="3">Colleges</option>
+              <option value="1">Public High Schools</option>
+              <option value="2">Private High Schools</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>State:</b>
+            <br />
+            <select name="ddlState" id="ddlState" #ddlST class="form-control" required #ddlState="ngModel"
+              [(ngModel)]="eduInfo.schoolAddress" appSelectValidator="select" (change)="onStateChange($event)"
+              style=" width:auto;padding-top:1px">
+              <option value="select" selected>Select State...</option>
+              <option *ngFor="let item of this.states" [value]="item.abbreviation">
+                {{item.name}}
+              </option>
+            </select>
+
+            <div *ngIf="ddlState.errors && (ddlState.dirty || ddlState.touched)">
+              <span class="help-bpx" style="color:red" *ngIf="ddlState.touched && ddlState.invalid">
+                State is
+                required.
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>
+              School <span style="font-size:8pt">
+                (if your school is not listed, let us know and we will add
+                it.):
+              </span>
+            </b>
+            <br />
+            <select name="ddlSchool" #ddlSchool="ngModel" #ddlSC [(ngModel)]="eduInfo.schoolID" id="ddlSchool"
+              appSelectValidator="select" style=" width:320px;padding-top:1px" class="form-control" required ngModel>
+              <option value="select">Select school...</option>
+              <option *ngFor="let item of schoolsList" [value]="item.schoolId">
+                {{item.schoolName}}
+              </option>
+            </select>
+            <div *ngIf="ddlSchool.errors && (ddlSchool.dirty || ddlSchool.touched)">
+              <span class="help-bpx" style="color:red" *ngIf="ddlSchool.touched && ddlSchool.invalid">
+                School is
+                required.
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>Field of Study (or Major):</b>
+            <br />
+            <input name="txtFieldStudy" id="txtFieldStudy" #txtFS #txtFieldStudy="ngModel" [(ngModel)]="eduInfo.major"
+              type="text" placeholder="Enter Major" class="form-control" style=" width:auto;padding-top:1px" required />
+            <div *ngIf="txtFieldStudy.errors && (txtFieldStudy.dirty || txtFieldStudy.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="txtFieldStudy.errors['required']">Major required.</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>Degree:</b>
+            <br />
+            <select name="ddlDegree" id="ddlDegree" #ddlDG #ddlDegree="ngModel" [(ngModel)]="eduInfo.degreeTypeID"
+              class="form-control" required appSelectValidator="select" style=" width:auto;padding-top:1px">
+              <option value="select">Select...</option>
+              <option value="2">Post Graduate</option>
+              <option value="1">Undergraduate</option>
+              <option value="3">High School Diploma</option>
+              <option value="4">GED</option>
+            </select>
+
+            <div *ngIf="ddlDegree.errors && (ddlDegree.dirty || ddlDegree.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="ddlDegree.touched && ddlDegree.invalid">
+                Degree is
+                required.
+              </span>
+            </div>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>Year:</b>
+            <br />
+            <select name="ddlYear" id="ddlYear" #ddlYR #ddlYear="ngModel" [(ngModel)]="eduInfo.yearClass"
+              class="form-control" required appSelectValidator="select" style=" width:auto;padding-top:1px">
+              <option value="select">Select Year...</option>
+              <option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </option>
+            </select>
+            <div *ngIf="ddlYear.errors && (ddlYear.dirty || ddlYear.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="ddlYear.touched && ddlYear.invalid">Year is
+                required.</span>
+            </div>
+          </div>
+
+          <div class="form-group" style="padding-bottom:0px">
+            <b>Sport Competition Level:</b>
+            <br />
+            <select name="ddlCompLevel" id="ddlCompLevel" #ddlCL #ddlCompLevel="ngModel"
+              [(ngModel)]="eduInfo.sportLevelType" class="form-control" required appSelectValidator="select"
+              style=" width:auto;padding-top:1px">
+              <option value="select">Select...</option>
+              <option value="Division I">Division I</option>
+              <option value="Division II">Division II</option>
+              <option value="Division III">Division III</option>
+              <option value="Club Sports">Club Sports</option>
+              <option value="Intramurals Sports">Intramural Sports</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doAddNewSchool(addNewSchoolForm)"
+          [disabled]="!addNewSchoolForm.valid || isSaving">
+          <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Add"}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Edit education modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Update School</h5>
+        <button type="button" #closeEditButton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #editSchoolForm='ngForm' (ngSubmit)="doUpdateSchool()">
+          <label>{{this.schoolName}}</label>
+          <br>
+          <div class="form-group" style="padding-bottom:15px">
+            <b>Field of Study (or Major):</b>
+            <br />
+            <input name="txtFieldStudyEdit" id="txtFieldStudyEdit" #txtFieldStudyEdit="ngModel"
+              [(ngModel)]="eduInfoEdit.major" type="text" placeholder="Enter Major" class="form-control"
+              style=" width:auto;height:27px;padding-top:1px" required />
+            <div *ngIf="txtFieldStudyEdit.errors && (txtFieldStudyEdit.dirty || txtFieldStudyEdit.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="txtFieldStudyEdit.errors['required']">Major
+                required.</span>
+            </div>
+          </div>
+          <div class="form-group" style="padding-bottom:12px">
+            <b>Degree:</b>
+            <br />
+            <select name="ddlDegreeEdit" id="ddlDegreeEdit" #ddlDegreeEdit="ngModel"
+              [(ngModel)]="eduInfoEdit.degreeTypeID" class="form-control" required appSelectValidator="select"
+              style=" width:auto;padding-top:1px">
+              <option value="select">Select...</option>
+              <option value="2">Post Graduate</option>
+              <option value="1">Undergraduate</option>
+              <option value="3">High School Diploma</option>
+              <option value="4">GED</option>
+            </select>
+            <div *ngIf="ddlDegreeEdit.errors && (ddlDegreeEdit.dirty || ddlDegreeEdit.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="ddlDegreeEdit.touched && ddlDegreeEdit.invalid">
+                Degree is
+                required.
+              </span>
+            </div>
+          </div>
+          <div class="form-group" style="padding-bottom:15px">
+            <b>Year:</b>
+            <br />
+            <select name="ddlYearEdit" id="ddlYearEdit" #ddlYearEdit="ngModel" [(ngModel)]="eduInfoEdit.yearClass"
+              class="form-control" required appSelectValidator="select" style=" width:auto;padding-top:1px">
+              <option value="select">Select Year...</option>
+              <option *ngFor="let year of years" [value]="year">
+                {{year}}
+              </option>
+            </select>
+            <div *ngIf="ddlYearEdit.errors && (ddlYearEdit.dirty || ddlYearEdit.touched)">
+              <span class="help-bpx" style="color:red;" *ngIf="ddlYearEdit.touched && ddlYearEdit.invalid">
+                Year is
+                required.
+              </span>
+            </div>
+          </div>
+          <div class="form-group" style="padding-bottom:12px">
+            <b>Sport Competition Level:</b>
+            <br />
+            <select name="ddlCompLevelEdit" id="ddlCompLevelEdit" #ddlCompLevelEdit="ngModel"
+              [(ngModel)]="eduInfoEdit.sportLevelType" class="form-control" required appSelectValidator="select"
+              style=" width:auto;padding-top:1px">
+              <option value="select">Select...</option>
+              <option value="Division I">Division I</option>
+              <option value="Division II">Division II</option>
+              <option value="Division III">Division III</option>
+              <option value="Club Sports">Club Sports</option>
+              <option value="Intramurals Sports">Intramural Sports</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doUpdateSchool()"
+          [disabled]="!editSchoolForm.valid || isSaving">
+          <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Update"}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Remove  modal-->
+<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="removeModalLabel">Remove School</h5>
+        <button type="button" #closeRemoveButton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #removeSchoolForm='ngForm'>
+          <label>Do you really want to remove the school: {{this.schoolName}}?</label>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doRemoveSchool()"
+          [disabled]="!removeSchoolForm.valid || isSaving">
+          <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Removing..." : "Remove"}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

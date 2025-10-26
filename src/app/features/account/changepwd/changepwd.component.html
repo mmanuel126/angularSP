@@ -1,0 +1,115 @@
+<body class="image-bg">
+  <form #changePwdForm='ngForm' name="changePwdForm" (ngSubmit)="changePassword()">
+    <div class="h-50  bg-animation">
+      <div class="d-flex h-50 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-md-8">
+          <div class="modal-dialog w-100 mx-auto">
+            <div class="modal-content modal_radius">
+              <br>
+              <div class="mx-auto mb-3 logo_div"><img src="/images/logo100.jpg" class="logo_size"> </div>
+              <h6 class="mt-1 mb-0 opacity-8" style="padding:10px">
+                <span style="text-align:left; font-weight: normal;">
+                  <p>
+                    Please use the form below to change your password. It is required that you follow the
+                    guideline below:
+                  </p>
+                  <p>
+                    Your new password must be between 5-12 characters in length. Use a combination of
+                    letters and numbers.
+                    Passwords are case-sensitive. Remember to check your CAPS lock key.
+                  </p>
+                </span>
+              </h6>
+              <h5 style="text-align:center">Change Password</h5>
+              <span style="text-align:center; font-weight:normal;">Email: {{email}}</span>
+              <br>
+              <div class="modal-body">
+                <div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div tabindex="-1">
+                        <div id="password" role="group" class="form-group" aria-describedby="password__BV_description_">
+                          <div style=" text-align:left">
+                            <input autocomplete="off" name="txtPwd" id="txtPwd" type="password"
+                              placeholder="Enter password..." required="required" ngModel #txtPwd="ngModel"
+                              aria-required="true" minlength="5" validateEqual="txtREPwd" reverse="true"
+                              [(ngModel)]="user.password" class="form-control"
+                              aria-describedby="password__BV_description_">
+                            @if (txtPwd.errors && (txtPwd.dirty || txtPwd.touched)) {
+                            <div>
+                              @if (txtPwd.errors['required']) {
+                              <span style="font-size:10pt;" class="errorMessage msg_color">
+                                Password is required.
+                              </span>
+                              }
+                              @if (txtPwd.errors['minlength']) {
+                              <span style="font-size:10pt;" class="errorMessage msg_color">
+                                Password must at least be 5 characters.
+                              </span>
+                              }
+                            </div>
+                            }
+                          </div>
+                        </div>
+                        <div id="repPassword" role="group" class="form-group"
+                          aria-describedby="repPassword__BV_description_">
+                          <div style=" text-align:left">
+                            <input autocomplete="off" name="txtREPwd" id="txtREPwd" type="password"
+                              placeholder="Re-enter password..." required="required" ngModel #txtREPwd="ngModel"
+                              aria-required="true" validateEqual="txtPwd" [(ngModel)]="user.confirmPwd"
+                              class="form-control" aria-describedby="repPassword__BV_description_">
+                            @if (txtREPwd.errors && (txtREPwd.dirty || txtREPwd.touched)) {
+                            <div style="text-align:left">
+                              @if (txtREPwd.errors['required']) {
+                              <span style="font-size:10pt;" class="errorMessage msg_color">
+                                Re-enter Password is required.
+                              </span>
+                              }
+                              @if (txtREPwd.errors && !txtREPwd.errors['required']) {
+                              <span style="font-size:10pt;" class="errorMessage msg_color">
+                                Re-enter password must match password.
+                              </span>
+                              }
+                            </div>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="divider"></div>
+                  <h6 class="mb-0">
+                    <a [routerLink]="['/']" class="text-primary">
+                      Sign in existing
+                      account
+                    </a>
+                  </h6>
+                  <div class="modal-footer clearfix">
+                    <div class="float-right">
+                      <button type="submit" id="btnChangePwd" [disabled]="!changePwdForm.valid || show"
+                        class="btn btn-primary btn-md">
+                        @if (show) {
+                        <i class='fa fa-spinner fa-spin'></i> Changing Password...
+                        }
+                        @else {
+                        Change Password
+                        }
+                      </button>
+                    </div>
+                  </div>
+                  @if (showErrMsg) {
+                  <div>
+                    <span style="color:red; text-align:center;padding-bottom:14px">
+                      An unexpected error occured. Please try again.
+                    </span>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>

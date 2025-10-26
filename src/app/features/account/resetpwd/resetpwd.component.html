@@ -1,0 +1,88 @@
+<body class="image-bg">
+  <form name="resetPwdForm" #resetPwdForm='ngForm' (ngSubmit)="resetPasswordUser()">
+    <div class="h-50  bg-animation">
+      <div class="d-flex h-50 justify-content-center align-items-center">
+        <div class="mx-auto app-login-box col-md-8">
+          <div class="modal-dialog w-100 mx-auto">
+            <div class="modal-content modal_radius">
+              <div class="modal-body">
+                <br>
+                <div class="mx-auto mb-3 logo_div"><img src="/images/logo100.jpg" class="logo_size"></div>
+                <h6 class="mt-1 mb-0 opacity-8" style="padding:10px">
+                  <span style="text-align:left;font-weight:normal">
+                    <p>
+                      An email describing how to get to your new password has been sent to you at
+                      <b><span style="color: #596a7d">{{email}}.</span></b>
+                    </p>
+                    <p>
+                      The delivery of the email may be delayed so please be patient. Confirm that the email
+                      above is
+                      correct and
+                      check your junk or spam folder if you did not received it in your inbox folder.
+                    </p>
+                    <p>
+                      A confirmation <b>reset code</b> is provided with the email. Please enter this
+                      code below to continue
+                      with resetting your password.
+                    </p>
+                  </span>
+                </h6>
+
+                <!--div class="modal-body" -->
+                <div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div tabindex="-1">
+                        <div id="code" role="group" aria-describedby="code__BV_description_" class="form-group">
+                          <div style="text-align: left;">
+                            <input id="txtCode" autocomplete="off" name="txtCode" type="text"
+                              placeholder="Enter reset code..." required="required" ngModel #txtCode="ngModel"
+                              [(ngModel)]="user.code" aria-required="true" class="form-control"
+                              aria-describedby="code__BV_description_">
+                            @if (txtCode.touched && !txtCode.valid) {
+                            <span style="font-size:10pt;" class="errorMessage msg_color">
+                              Reset code is required.
+                            </span>
+                            }
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="divider"></div>
+                  <h6 class="mb-0">
+                    <a [routerLink]="['/']" class="text-primary">
+                      Sign in existing
+                      account
+                    </a>
+                  </h6>
+                  <div class="modal-footer clearfix">
+                    <div class="float-right">
+                      <button type="submit" id="btnReset" [disabled]="!resetPwdForm.valid || isWorking"
+                        class="btn btn-primary btn-md">
+                        @if (isWorking) {
+                        <i class='fa fa-spinner fa-spin'></i> Please wait...
+                        } @else {
+                        reset
+                        }
+                      </button>
+                    </div>
+                  </div>
+                  @if (showErrMsg) {
+                  <div>
+                    <span style="color:red; text-align:center;padding-bottom:14px">
+                      The code entered is invalid or expired. Try again or
+                      <a [routerLink]="['/forgotpwd']">click here to get a new code.</a>
+                    </span>
+                  </div>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>

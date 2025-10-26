@@ -1,0 +1,236 @@
+<div class="row">
+    <div class="col-sm-14 col-md-12">
+        <div class="mb-3 card modal_radius" style="padding:10px">
+
+            <div class="card-header-tab card-header">
+                <div class="card-header-title font-size-sm text-capitalize font-weight-bold">
+                    <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"> </i>
+                    Recent News
+                </div>
+            </div>
+
+            <div style="padding:10px; padding-bottom:0px">
+                <carousel [noPause]="false" [showIndicators]="false">
+                    <slide *ngFor='let res of recentNews; let i = index'>
+                        <div class="card mb-3">
+                            <a href="{{res.newsUrl}}" target='_blank'>
+                                <img class="card-img-top" src="{{res.newsImgUrl}}" alt="">
+                            </a>
+                            <div class="card-body">
+                                <span style="font-size:12pt;font-weight: normal;">
+                                    <a href="{{res.newsUrl}}" target='_blank'>{{res.newsTitle}}</a>
+                                </span><br>
+                                <small>Posted Date:&nbsp;{{res.newsDatePosted}}</small><br>
+                                <span style="color:Gray;font-size:10pt">
+                                    {{res.newsDetail}}&hellip;
+                                    <span style="font-size:8pt;">
+                                        <a href="{{res.newsUrl}}" target='_blank'>Details</a>
+                                    </span>
+                                    <a href="http://www.{{res.newsUrl}}" target='_blank'>
+                                        <span style="font-size:7pt;font-weight:bold">>></span>
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </slide>
+                </carousel>
+            </div>
+        </div>
+
+        <div class="col-sm-14 col-lg-25">
+            <div class="card-hover-shadow-2x mb-3 card modal_radius" style="padding:10px">
+                <div class="card-header-tab card-header">
+                    <div class="card-header-title font-size-sm text-capitalize font-weight-bold">
+                        Recent Posts
+                        &nbsp;
+                        <button (click)="refreshPosts()" class="mr-2 btn btn-link" style="font-size:10pt">
+                            <i class="fa fa-refresh"></i>&nbsp;Refresh
+                        </button><span style="color:gray">|</span>&nbsp;
+                        <button (click)="jumpToComment('0')" class="mr-2 btn btn-link btn-sm" style="font-size:10pt">
+                            <i class="fa fa-plus"></i>&nbsp;Add New Post
+                        </button>
+
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='col-md-offset-2 col-md-9'>
+                        <!-- progress info to show posts refreshing -->
+                        <div *ngIf="show" id="prgPost"
+                            style="padding-left:40px;padding-top:5px; font-size:8pt;display:block">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Refreshing posts...
+                        </div>
+                        <!-- the posts area -->
+                        <div style="padding-left:6px;padding-top:10px; width:2000px">
+
+                            <table id="tbRecentPosts">
+                                <tbody>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr
+                                        *ngFor='let res of recentPosts | paginate: { itemsPerPage: 5, currentPage: p }; let i = index'>
+                                        <td
+                                            style="vertical-align: top; width: 12px; text-align: left; padding-top: -100px;">
+                                            <input type="image" [routerLink]="['/members/show-profile']"
+                                                [queryParams]="{memberID:res.memberID}" name="imgMbr" id="imgMbr"
+                                                src="{{this.memberImageUrlpath}}{{(res.picturePath==null || res.picturePath=='') ? 'default.png' : res.picturePath }}"
+                                                style="height:35px;width:35px;border-radius:50%" />
+                                        </td>
+                                        <td style="vertical-align: top; text-align: left;width:350px;padding-left:7px">
+                                            <span>
+                                                <span id="lblDesc"
+                                                    style="color:#36454f;font-size: 10pt; background-color: seashell; padding:5px; border-radius:10px 10px 10px 10px">
+                                                    <a id="lbMbrName" href="#" [routerLink]="['/members/show-profile']"
+                                                        [queryParams]="{memberID:res.memberID}"
+                                                        style="font-weight:bold;">{{res.memberName}}</a>
+                                                    &nbsp;{{res.description}}
+                                                </span>
+                                                <br />
+                                                <span style="font-size:9pt;">
+                                                    <span id="lblPostDate" style="color:Gray;">{{res.datePosted}}</span>
+                                                    <span style="color: #596a7d">&nbsp;-</span>
+                                                    <a (click)="jumpToReply(res.postID)" id="lbPostComment" href="#"
+                                                        data-toggle="modal" data-target="#mdlReplyPost"
+                                                        style=" font-weight: normal;">&nbsp;Reply</a>
+                                                </span>
+
+                                                <table id="tbChildPosts_1161"
+                                                    style="width:450px;text-align: left;  border-bottom-style: none; border-top: 1px solid #e7eadf; border-bottom-color: White; border-bottom-width: 3px">
+                                                    <tbody>
+                                                        <tr *ngFor='let chi of res.children'>
+                                                            <td
+                                                                style="width: 12px; text-align: left; padding-top: -100px; vertical-align: top; font-size: 8pt;">
+                                                                <input type="image"
+                                                                    [routerLink]="['/members/show-profile']"
+                                                                    [queryParams]="{memberID:chi.memberID}"
+                                                                    name="imgChild" id="imgChild"
+                                                                    src="{{this.memberImageUrlpath}}{{(chi.picturePath==null || chi.picturePath=='') ? 'default.png' : chi.picturePath }}"
+                                                                    style="color:#596A7D;height:35px;width:35px; cursor:pointer;border-radius:50%" />
+                                                            </td>
+                                                            <td
+                                                                style="vertical-align: middle; text-align: left;padding-left:7px;">
+                                                                <span id="lblResponseDesc"
+                                                                    style="color:#36454f;font-size: 10pt;">
+                                                                    <a [routerLink]="['/members/show-profile']"
+                                                                        [queryParams]="{memberID:res.memberID}"
+                                                                        id="lbMbrName" href=""
+                                                                        style="font-weight:bold; cursor:pointer">{{chi.memberName}}</a>
+                                                                    &nbsp;{{chi.description}}
+                                                                </span>
+                                                                <br />
+                                                                <span id="lblResponseDate"
+                                                                    style="color:Gray;font-size:9pt">{{chi.dateResponded}}</span>
+                                                                <span style="color: #596a7d">&nbsp;-</span>
+                                                                <a (click)="jumpToReply(res.postID)" id="lbPostComment"
+                                                                    href="#"
+                                                                    style=" font-weight:normal; font-size:9pt">&nbsp;Reply</a>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                            <div id="pageNavPosition"></div>
+                        </div>
+                        <div style="text-align:left !important;  font-size:12px" align="left">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- hidden control to trigger button in case  -->
+<button #hiddenButton [hidden]="true" data-toggle="modal" data-target="#reactivateSP"></button>
+
+<!-- template for new post modal -->
+<div class="modal fade" id="mdlNewPost" tabindex="-1" role="dialog" aria-labelledby="mdlNewPostLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mdlNewPostModalLabel">New Post</h5>
+                <button type="button" #closeNewButton class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #sendReplyForm='ngForm'>
+                    <textarea autofocus name="txtResponse" rows="2" cols="20" id="txtResponse" maxlength="150" required
+                        ngModel [(ngModel)]="postModel.postText"
+                        style="color:Gray;border-color:LightGrey;border-width:1px;border-style:solid;font-size:9pt;height:40px; text-align:left"
+                        class="form-control"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="doPost()" [disabled]="!sendReplyForm.valid">
+                    Post
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- template for reply post modal-->
+<div class="modal fade" id="mdlReplyPost" tabindex="-1" role="dialog" aria-labelledby="mdlReplyPostLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reply to Post</h5>
+                <button type="button" #closeReplyButton class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #sendReplyForm='ngForm' (ngSubmit)="doPost()">
+                    <textarea autofocus name="txtResponse" rows="2" cols="20" id="txtResponse" maxlength="150" required
+                        ngModel [(ngModel)]="postModel.postText"
+                        style="color:Gray;border-color:LightGrey;border-width:1px;border-style:solid;font-size:9pt;height:40px; text-align:left"
+                        class="form-control"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="doPostReply()" [disabled]="!sendReplyForm.valid">
+                    Post
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- template for reactivate popup -->
+<div *ngIf="showModalBox" class="modal fade" id="reactivateSP" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Account Reactivation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Welcome back! Your account was successfully reactivated. You may now continue to use the site as you
+                    were
+                    before you deactivated your account.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

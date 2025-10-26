@@ -1,0 +1,236 @@
+<body class="image-bg">
+    <form #loginForm='ngForm' (ngSubmit)="completeRegister()">
+        <div class="h-50  bg-animation">
+            <div class="d-flex h-50 justify-content-center align-items-center">
+                <div class="mx-auto app-login-box col-md-8">
+                    <br>
+                    <div class="modal-dialog w-100 mx-auto">
+                        <div class="modal-content modal_radius">
+                            <div class="modal-body">
+                                <div class="mx-auto mb-3 logo_div"><img src="/images/logo100.jpg" class="logo_size">
+                                </div>
+
+                                <div class="h5 modal-title text-center">
+                                    <h5 class="mt-2">
+                                        <div>Welcome Back!</div>
+                                    </h5>
+                                    <h6><span>Thank you again for joining {{this.appName}}!</span></h6>
+                                </div>
+                                <br>
+
+                                <div class="text-center">
+                                    Before you can start using the site you must
+                                    complete your registration by confirming below your acknowledgement to the site
+                                    <a href="" data-toggle="modal" data-target="#lgTermsModal"><b>Terms</b></a> of use.
+                                    <br>
+                                    <br>
+                                    <div class="custom-control custom-checkbox">
+                                        <span style="padding-bottom:5px">
+                                            <input id="termsCheck" name="termsCheck" type="checkbox"
+                                                (change)="onCheckboxChange($event)" autocomplete="off"
+                                                class="custom-control-input" value="true"><label for="termsCheck"
+                                                class="custom-control-label">
+                                                I have read and agree to follow the rules as pertained in the
+                                                {{this.appName}} site <b>Terms of Use.</b>
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                                @if (this.result =='notfound') {
+                                <div class="h6 text-center">
+                                    <br>
+                                    <table>
+                                        <tr>
+                                            <td id="errMsgTD" class="incorrect_cred_header">
+                                                <b>New User Not Found Error</b>
+                                                <br />
+                                                <span class='incorrect_cred_msg'>
+                                                    We could not verify you on our system as a new user. Please check
+                                                    and respond to the email
+                                                    that was sent to you in regard to completing your registration.
+                                                    Click
+                                                    the link on the email
+                                                    again to re-try completing the registration.
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                }
+
+                                <div class="divider"></div>
+
+                            </div>
+                            <div class="modal-footer clearfix">
+
+                                <div class="float-right">
+                                    <button type="submit" id="login" [disabled]="!terms" class="btn btn-primary btn-md">
+                                        @if (isLoading) {
+                                        <i class='fa fa-spinner fa-spin'></i> Logging. Please wait...
+                                        }
+                                        @else
+                                        {
+                                        Accept
+                                        }
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+<!-- template for terms popup -->
+<div class="modal fade" id="lgTermsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Terms of Use</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p style="font-weight:normal; font-size:10pt">
+                    {{this.companyName}} is a social networking service. By using
+                    it, you signify that you have read, understand, and agree to be bound by the following
+                    Terms of Use or Agreement.
+                </p>
+                <p style="font-size: 8pt">
+                    <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+                        <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+                            Basic Terms
+                        </h3>
+                    </span>
+
+                </p>
+                <ol style="font-size:10pt">
+                    <li>You must be 15 years or older to use the Site.</li>
+                    <br />
+                    <li>You must maintain the security of your password and identification.</li>
+                    <br />
+                    <li>You are fully responsible for any actions that take place using your account.</li>
+                    <br />
+                    <li>
+                        You must not upload, post, transmit, share, or store any content that we deem to
+                        be harmful, abusive, inflammatory, harassing, vulgar, obscene, fraudulent, or intimidating
+                        to other Members.
+                    </li>
+                    <br />
+                    <li>
+                        You may not use the Site for any illegal or unauthorized purpose such as infringement
+                        upon the rights of any third party, including copyright, trademark, privacy, publicity
+                        or other personal or proprietary rights; or contain libelous, defamatory or otherwise
+                        unlawful material.
+                    </li>
+                    <br />
+                    <li>
+                        You are solely responsible for your conduct and any information, graphics, photos,
+                        video, and links that you submit, post, and display on the Site.
+                    </li>
+                    <br />
+                    <li>You must not create or submit unwanted email (spam) to our members. </li>
+                    <br />
+                    <li>
+                        You must not transmit any computer viruses or any script logic that could lead to
+                        destruction of the Site.
+                    </li>
+                    <br />
+                    <li>
+                        You must not violate any laws of any third party web sites. We prohibit users from
+                        uploading, posting or otherwise transmitting on our Site any materials that violate
+                        another party's property rights. When we receive proper Notification of alleged
+                        copyright infringement, we will promptly remove or disable access to the allegedly
+                        infringing material and terminate the accounts of the infringer.
+                    </li>
+                    <br />
+                </ol>
+                <p style="font-size: 8pt">
+                    <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+                        <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+                            General Terms
+                        </h3>
+                    </span>
+                </p>
+                <ol style="font-size:10pt">
+                    <li>
+                        {{this.companyName}} reserves the right to modify or terminate the content of the Site
+                        at any time for any reason without any notification.
+                    </li>
+                    <br />
+                    <li>
+                        {{this.companyName}} reserves the right to change the Terms of Use at any time. If any
+                        changes should occur, we will post the changes to these Terms of Use on this page
+                        and will indicate at the bottom of this page the date last modified.
+                    </li>
+                    <br />
+                    <li>
+                        We reserve the right to refuse service to anyone for any reason at any time in accordance
+                        with any applicable laws.
+                    </li>
+                    <br />
+                    <li>
+                        We may remove content or membership accounts that we determine in our sole discretion
+                        are unlawful, offensive, threatening, obscene, or otherwise violates any party's
+                        intellectual property or these Term of Use.
+                    </li>
+                    <br />
+                    <li>
+                        We reserve the right to reclaim names on behalf of businesses or individuals that
+                        hold legal claim or trademark on those names.
+                    </li>
+                    <br />
+                </ol>
+                <p style="font-size: 8pt">
+                    <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+                        <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+                            Copyright
+                        </h3>
+                    </span>
+                </p>
+                <p style="font-size: 10pt">
+                    All content on the web Site including text, graphics, pictures, videos, information,
+                    applications, software, music, sound and other files, are the proprietary property
+                    of {{this.companyName}}, its users or its licensors with all rights reserved. No Site
+                    content may be modified, copied, distributed, framed, reproduced, republished, downloaded,
+                    displayed, posted, transmitted, or sold in any form or by any means, in whole or
+                    in part, without prior written permission of {{this.companyName}}, except that the foregoing
+                    does not apply to your own content as defined below that you legally post on the
+                    Site.
+                </p>
+                <br />
+                <p style="font-size: 8pt">
+                    <span style="color: #596a7d; font-family: inherit; font-weight: bold;">
+                        <h3 style="border-bottom-style: solid; border-bottom-color: #596a7d; color: #596a7d;
+                              border-width: 1px; width: 100%">
+                            User Content
+                        </h3>
+                    </span>
+                </p>
+                <p style="font-size: 10pt">
+                    You are solely responsible for the photos, profiles, messages, notes, text, information,
+                    music, video, advertisements, listings, and other content that you upload, publish
+                    or display on {{this.companyName}}, or transmit to or share with other users. You may
+                    not post, transmit, or share user content on {{this.companyName}} that you did not create
+                    or that you do not have permission. You understand and agree that {{this.companyName}}
+                    may, but is not obligated to, review and delete (without notice) any Site content
+                    or user content in its sole discretion, for any reason or no reason, including user
+                    content that in the sole judgment of {{this.companyName}} violates this Agreement or
+                    which might be offensive, illegal, or that might violate the rights, harm, or threaten
+                    the safety of users or others.
+                </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

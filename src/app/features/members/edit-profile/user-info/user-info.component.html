@@ -1,0 +1,615 @@
+<div>
+  <form class="form-horizontal" name="basicInfoForm" #basicInfoForm='ngForm' (ngSubmit)="saveBasicInfo()">
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>First&nbsp;Name:</b>
+      <br />
+      <input name="txtFirstName" #txtFirstName="ngModel" type="text" id="txtFirstName"
+        [(ngModel)]="this.basicInfoModel.firstName" placeholder="Enter First Name" class="form-control" required
+        ngModel />
+      <div *ngIf="txtFirstName.errors && (txtFirstName.dirty || txtFirstName.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtFirstName.errors['required']">First name required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Middle&nbsp;Name:</b>
+      <br />
+      <input name="txtMName" #txtFName="ngModel" type="text" id="txtMName" [(ngModel)]="this.basicInfoModel.middleName"
+        Placeholder="Enter Middle Name" class="form-control" />
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px" *ngIf="this.basicInfoModel?.lastName">
+      <b>Last&nbsp;Name:</b>
+      <br />
+      <input name="txtLName" #txtLName="ngModel" type="text" id="txtLName" [(ngModel)]="this.basicInfoModel.lastName"
+        placeholder="Enter Last Name" class="form-control" required ngModel />
+      <div *ngIf="txtLName.errors && (txtLName.dirty || txtLName.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtLName.errors['required']">Last name required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Title:</b>
+      <br />
+      <input name="txtTitle" #txtTitle="ngModel" type="text" id="txtTitle" [(ngModel)]="this.basicInfoModel.titleDesc"
+        placeholder="For example, Basketball Player or Sport enthusiast..." class="form-control" style=" width:400px"
+        required ngModel />
+      <div *ngIf="txtTitle.errors && (txtTitle.dirty || txtTitle.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtTitle.errors['required']">Title required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Your Main Sport:</b>
+      <br />
+      <select name="ddlSport" #ddlSport="ngModel" id="ddlSport" [(ngModel)]="this.basicInfoModel.sport"
+        appSelectValidator="select" class="form-control" required ngModel>
+        <option *ngFor="let item of sportsList" value="{{item.name}}">
+          {{item.name}}
+        </option>
+      </select>
+      <div *ngIf="ddlSport.errors && (ddlSport.dirty || ddlSport.touched)">
+        <span class="help-bpx" style="color:red" *ngIf="ddlSport.touched && ddlSport.invalid">The sport you play
+          is required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Current&nbsp;Status:</b>
+      <br />
+      <select name="ddlRelStatus" #t (change)="showAthleteAttributes(t.value)" #ddlRelStatus="ngModel" id="ddlRelStatus"
+        [(ngModel)]="this.basicInfoModel.currentStatus" required ngmodel appSelectValidator="select" title=""
+        class="form-control" style=" width:auto;height:27px;padding-top:1px">
+        <option value="select">Select Status...</option>
+        <option value="Agent">Agent</option>
+        <option value="Athlete (Amateur)">Athlete (Amateur)</option>
+        <option value="Athlete (Professional)">Athlete (Professional)</option>
+        <option value="Athletic Trainer">Athletic Trainer</option>
+        <option value="Coach">Coach</option>
+        <option value="Management">Management</option>
+        <option value="Athletic Trainer">Referee</option>
+        <option value="Retired">Retired</option>
+        <option value="Scout">Scout</option>
+        <option value="Sports Fanatic">Sports Fanatic</option>
+      </select>
+      <div *ngIf="ddlRelStatus.errors && (ddlRelStatus.dirty || ddlRelStatus.touched)">
+        <span class="help-bpx" style="color:red" *ngIf="ddlRelStatus.touched && ddlRelStatus.invalid">Your current
+          status required.</span>
+      </div>
+    </div>
+    <div *ngIf="isAthlete">
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Preferred Hand/Foot:</b>
+        <br />
+        <select name="ddlPreferredHF" #ddlPreferredHF="ngModel" id="ddlPreferredHF"
+          [(ngModel)]="this.basicInfoModel.leftRightHandFoot" ngmodel appSelectValidator="select" title=""
+          class="form-control">
+          <option selected value="Left">Left</option>
+          <option value="Right">Right</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Preferred Position:</b>
+        <br />
+        <input name="txtPreferredPos" #txtPreferredPos="ngModel" type="text" id="txtPreferredPos"
+          [(ngModel)]="this.basicInfoModel.preferredPosition" placeholder="Enter preferred position..."
+          class="form-control" ngModel />
+      </div>
+
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Secondary Position:</b>
+        <br />
+        <input name="txtSecondaryPos" #txtSecondaryPos="ngModel" type="text" id="txtTitle"
+          [(ngModel)]="this.basicInfoModel.secondaryPosition" placeholder="Enter secondary position..."
+          class="form-control" ngModel />
+      </div>
+
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Height:</b>
+        <br />
+        <select name="ddlHeight" #ddlHeight="ngModel" id="ddlHeight" [(ngModel)]="this.basicInfoModel.height" ngmodel
+          appSelectValidator="select" title="" class="form-control">
+          <option>4' 0"</option>
+          <option>4' 1"</option>
+          <option>4' 2"</option>
+          <option>4' 3"</option>
+          <option>4' 4"</option>
+          <option>4' 5"</option>
+          <option>4' 6"</option>
+          <option>4' 7"</option>
+          <option>4' 8"</option>
+          <option>4' 9"</option>
+          <option>4' 10"</option>
+          <option>4' 11"</option>
+          <option>5' 0"</option>
+          <option>5' 1"</option>
+          <option>5' 2"</option>
+          <option>5' 3"</option>
+          <option>5' 4"</option>
+          <option>5' 5"</option>
+          <option>5' 6"</option>
+          <option>5' 7"</option>
+          <option>5' 8"</option>
+          <option>5' 9"</option>
+          <option>5' 10"</option>
+          <option>5' 11"</option>
+          <option>6' 0"</option>
+          <option>6' 1"</option>
+          <option>6' 2"</option>
+          <option>6' 3"</option>
+          <option>6' 4"</option>
+          <option>6' 5"</option>
+          <option>6' 6"</option>
+          <option>6' 7"</option>
+          <option>6' 8"</option>
+          <option>6' 9"</option>
+          <option>6' 10"</option>
+          <option>6' 11"</option>
+          <option>7' 0"</option>
+          <option>7' 1"</option>
+          <option>7' 2"</option>
+          <option>7' 3"</option>
+          <option>7' 4"</option>
+          <option>7' 5"</option>
+          <option>7' 6"</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Weight:</b>
+        <br />
+        <select name="ddlWeight" #ddlWeight="ngModel" id="ddlWeight" [(ngModel)]="this.basicInfoModel.weight" ngmodel
+          appSelectValidator="select" title="" class="form-control" style=" width:auto;height:27px;padding-top:1px">
+          <option value="50 lbs">50 lbs</option>
+          <option value="51 lbs">51 lbs</option>
+          <option value="52 lbs">52 lbs</option>
+          <option value="53 lbs">53 lbs</option>
+          <option value="54 lbs">54 lbs</option>
+          <option value="55 lbs">55 lbs</option>
+          <option value="56 lbs">56 lbs</option>
+          <option value="57 lbs">57 lbs</option>
+          <option value="58 lbs">58 lbs</option>
+          <option value="59 lbs">59 lbs</option>
+          <option value="60 lbs">60 lbs</option>
+          <option value="61 lbs">61 lbs</option>
+          <option value="62 lbs">62 lbs</option>
+          <option value="63 lbs">63 lbs</option>
+          <option value="64 lbs">64 lbs</option>
+          <option value="65 lbs">65 lbs</option>
+          <option value="66 lbs">66 lbs</option>
+          <option value="67 lbs">67 lbs</option>
+          <option value="68 lbs">68 lbs</option>
+          <option value="69 lbs">69 lbs</option>
+          <option value="70 lbs">70 lbs</option>
+          <option value="71 lbs">71 lbs</option>
+          <option value="72 lbs">72 lbs</option>
+          <option value="73 lbs">73 lbs</option>
+          <option value="74 lbs">74 lbs</option>
+          <option value="75 lbs">75 lbs</option>
+          <option value="76 lbs">76 lbs</option>
+          <option value="77 lbs">77 lbs</option>
+          <option value="78 lbs">78 lbs</option>
+          <option value="79 lbs">79 lbs</option>
+          <option value="80 lbs">80 lbs</option>
+          <option value="81 lbs">81 lbs</option>
+          <option value="82 lbs">82 lbs</option>
+          <option value="83 lbs">83 lbs</option>
+          <option value="84 lbs">84 lbs</option>
+          <option value="85 lbs">85 lbs</option>
+          <option value="86 lbs">86 lbs</option>
+          <option value="87 lbs">87 lbs</option>
+          <option value="88 lbs">88 lbs</option>
+          <option value="89 lbs">89 lbs</option>
+          <option value="90 lbs">90 lbs</option>
+          <option value="91 lbs">91 lbs</option>
+          <option value="92 lbs">92 lbs</option>
+          <option value="93 lbs">93 lbs</option>
+          <option value="94 lbs">94 lbs</option>
+          <option value="95 lbs">95 lbs</option>
+          <option value="96 lbs">96 lbs</option>
+          <option value="97 lbs">97 lbs</option>
+          <option value="98 lbs">98 lbs</option>
+          <option value="99 lbs">99 lbs</option>
+          <option value="100 lbs">100 lbs</option>
+          <option value="101 lbs">101 lbs</option>
+          <option value="102 lbs">102 lbs</option>
+          <option value="103 lbs">103 lbs</option>
+          <option value="104 lbs">104 lbs</option>
+          <option value="105 lbs">105 lbs</option>
+          <option value="106 lbs">106 lbs</option>
+          <option value="107 lbs">107 lbs</option>
+          <option value="108 lbs">108 lbs</option>
+          <option value="109 lbs">109 lbs</option>
+          <option value="110 lbs">110 lbs</option>
+          <option value="111 lbs">111 lbs</option>
+          <option value="112 lbs">112 lbs</option>
+          <option value="113 lbs">113 lbs</option>
+          <option value="114 lbs">114 lbs</option>
+          <option value="115 lbs">115 lbs</option>
+          <option value="116 lbs">116 lbs</option>
+          <option value="117 lbs">117 lbs</option>
+          <option value="118 lbs">118 lbs</option>
+          <option value="119 lbs">119 lbs</option>
+          <option value="120 lbs">120 lbs</option>
+          <option value="121 lbs">121 lbs</option>
+          <option value="122 lbs">122 lbs</option>
+          <option value="123 lbs">123 lbs</option>
+          <option value="124 lbs">124 lbs</option>
+          <option value="125 lbs">125 lbs</option>
+          <option value="126 lbs">126 lbs</option>
+          <option value="127 lbs">127 lbs</option>
+          <option value="128 lbs">128 lbs</option>
+          <option value="129 lbs">129 lbs</option>
+          <option value="130 lbs">130 lbs</option>
+          <option value="131 lbs">131 lbs</option>
+          <option value="132 lbs">132 lbs</option>
+          <option value="133 lbs">133 lbs</option>
+          <option value="134 lbs">134 lbs</option>
+          <option value="135 lbs">135 lbs</option>
+          <option value="136 lbs">136 lbs</option>
+          <option value="137 lbs">137 lbs</option>
+          <option value="138 lbs">138 lbs</option>
+          <option value="139 lbs">139 lbs</option>
+          <option value="140 lbs">140 lbs</option>
+          <option value="141 lbs">141 lbs</option>
+          <option value="142 lbs">142 lbs</option>
+          <option value="143 lbs">143 lbs</option>
+          <option value="144 lbs">144 lbs</option>
+          <option value="145 lbs">145 lbs</option>
+          <option value="146 lbs">146 lbs</option>
+          <option value="147 lbs">147 lbs</option>
+          <option value="148 lbs">148 lbs</option>
+          <option value="149 lbs">149 lbs</option>
+          <option value="150 lbs">150 lbs</option>
+          <option value="151 lbs">151 lbs</option>
+          <option value="152 lbs">152 lbs</option>
+          <option value="153 lbs">153 lbs</option>
+          <option value="154 lbs">154 lbs</option>
+          <option value="155 lbs">155 lbs</option>
+          <option value="156 lbs">156 lbs</option>
+          <option value="157 lbs">157 lbs</option>
+          <option value="158 lbs">158 lbs</option>
+          <option value="159 lbs">159 lbs</option>
+          <option value="160 lbs">160 lbs</option>
+          <option value="161 lbs">161 lbs</option>
+          <option value="162 lbs">162 lbs</option>
+          <option value="163 lbs">163 lbs</option>
+          <option value="164 lbs">164 lbs</option>
+          <option value="165 lbs">165 lbs</option>
+          <option value="166 lbs">166 lbs</option>
+          <option value="167 lbs">167 lbs</option>
+          <option value="168 lbs">168 lbs</option>
+          <option value="169 lbs">169 lbs</option>
+          <option value="170 lbs">170 lbs</option>
+          <option value="171 lbs">171 lbs</option>
+          <option value="172 lbs">172 lbs</option>
+          <option value="173 lbs">173 lbs</option>
+          <option value="174 lbs">174 lbs</option>
+          <option value="175 lbs">175 lbs</option>
+          <option value="176 lbs">176 lbs</option>
+          <option value="177 lbs">177 lbs</option>
+          <option value="178 lbs">178 lbs</option>
+          <option value="179 lbs">179 lbs</option>
+          <option value="180 lbs">180 lbs</option>
+          <option value="181 lbs">181 lbs</option>
+          <option value="182 lbs">182 lbs</option>
+          <option value="183 lbs">183 lbs</option>
+          <option value="184 lbs">184 lbs</option>
+          <option value="185 lbs">185 lbs</option>
+          <option value="186 lbs">186 lbs</option>
+          <option value="187 lbs">187 lbs</option>
+          <option value="188 lbs">188 lbs</option>
+          <option value="189 lbs">189 lbs</option>
+          <option value="190 lbs">190 lbs</option>
+          <option value="191 lbs">191 lbs</option>
+          <option value="192 lbs">192 lbs</option>
+          <option value="193 lbs">193 lbs</option>
+          <option value="194 lbs">194 lbs</option>
+          <option value="195 lbs">195 lbs</option>
+          <option value="196 lbs">196 lbs</option>
+          <option value="197 lbs">197 lbs</option>
+          <option value="198 lbs">198 lbs</option>
+          <option value="199 lbs">199 lbs</option>
+          <option value="200 lbs">200 lbs</option>
+          <option value="201 lbs">201 lbs</option>
+          <option value="202 lbs">202 lbs</option>
+          <option value="203 lbs">203 lbs</option>
+          <option value="204 lbs">204 lbs</option>
+          <option value="205 lbs">205 lbs</option>
+          <option value="206 lbs">206 lbs</option>
+          <option value="207 lbs">207 lbs</option>
+          <option value="208 lbs">208 lbs</option>
+          <option value="209 lbs">209 lbs</option>
+          <option value="210 lbs">210 lbs</option>
+          <option value="211 lbs">211 lbs</option>
+          <option value="212 lbs">212 lbs</option>
+          <option value="213 lbs">213 lbs</option>
+          <option value="214 lbs">214 lbs</option>
+          <option value="215 lbs">215 lbs</option>
+          <option value="216 lbs">216 lbs</option>
+          <option value="217 lbs">217 lbs</option>
+          <option value="218 lbs">218 lbs</option>
+          <option value="219 lbs">219 lbs</option>
+          <option value="220 lbs">220 lbs</option>
+          <option value="221 lbs">221 lbs</option>
+          <option value="222 lbs">222 lbs</option>
+          <option value="223 lbs">223 lbs</option>
+          <option value="224 lbs">224 lbs</option>
+          <option value="225 lbs">225 lbs</option>
+          <option value="226 lbs">226 lbs</option>
+          <option value="227 lbs">227 lbs</option>
+          <option value="228 lbs">228 lbs</option>
+          <option value="229 lbs">229 lbs</option>
+          <option value="230 lbs">230 lbs</option>
+          <option value="231 lbs">231 lbs</option>
+          <option value="232 lbs">232 lbs</option>
+          <option value="233 lbs">233 lbs</option>
+          <option value="234 lbs">234 lbs</option>
+          <option value="235 lbs">235 lbs</option>
+          <option value="236 lbs">236 lbs</option>
+          <option value="237 lbs">237 lbs</option>
+          <option value="238 lbs">238 lbs</option>
+          <option value="239 lbs">239 lbs</option>
+          <option value="240 lbs">240 lbs</option>
+          <option value="241 lbs">241 lbs</option>
+          <option value="242 lbs">242 lbs</option>
+          <option value="243 lbs">243 lbs</option>
+          <option value="244 lbs">244 lbs</option>
+          <option value="245 lbs">245 lbs</option>
+          <option value="246 lbs">246 lbs</option>
+          <option value="247 lbs">247 lbs</option>
+          <option value="248 lbs">248 lbs</option>
+          <option value="249 lbs">249 lbs</option>
+          <option value="250 lbs">250 lbs</option>
+          <option value="251 lbs">251 lbs</option>
+          <option value="252 lbs">252 lbs</option>
+          <option value="253 lbs">253 lbs</option>
+          <option value="254 lbs">254 lbs</option>
+          <option value="255 lbs">255 lbs</option>
+          <option value="256 lbs">256 lbs</option>
+          <option value="257 lbs">257 lbs</option>
+          <option value="258 lbs">258 lbs</option>
+          <option value="259 lbs">259 lbs</option>
+          <option value="260 lbs">260 lbs</option>
+          <option value="261 lbs">261 lbs</option>
+          <option value="262 lbs">262 lbs</option>
+          <option value="263 lbs">263 lbs</option>
+          <option value="264 lbs">264 lbs</option>
+          <option value="265 lbs">265 lbs</option>
+          <option value="266 lbs">266 lbs</option>
+          <option value="267 lbs">267 lbs</option>
+          <option value="268 lbs">268 lbs</option>
+          <option value="269 lbs">269 lbs</option>
+          <option value="270 lbs">270 lbs</option>
+          <option value="271 lbs">271 lbs</option>
+          <option value="272 lbs">272 lbs</option>
+          <option value="273 lbs">273 lbs</option>
+          <option value="274 lbs">274 lbs</option>
+          <option value="275 lbs">275 lbs</option>
+          <option value="276 lbs">276 lbs</option>
+          <option value="277 lbs">277 lbs</option>
+          <option value="278 lbs">278 lbs</option>
+          <option value="279 lbs">279 lbs</option>
+          <option value="280 lbs">280 lbs</option>
+          <option value="281 lbs">281 lbs</option>
+          <option value="282 lbs">282 lbs</option>
+          <option value="283 lbs">283 lbs</option>
+          <option value="284 lbs">284 lbs</option>
+          <option value="285 lbs">285 lbs</option>
+          <option value="286 lbs">286 lbs</option>
+          <option value="287 lbs">287 lbs</option>
+          <option value="288 lbs">288 lbs</option>
+          <option value="289 lbs">289 lbs</option>
+          <option value="290 lbs">290 lbs</option>
+          <option value="291 lbs">291 lbs</option>
+          <option value="292 lbs">292 lbs</option>
+          <option value="293 lbs">293 lbs</option>
+          <option value="294 lbs">294 lbs</option>
+          <option value="295 lbs">295 lbs</option>
+          <option value="296 lbs">296 lbs</option>
+          <option value="297 lbs">297 lbs</option>
+          <option value="298 lbs">298 lbs</option>
+          <option value="299 lbs">299 lbs</option>
+          <option value="300 lbs">300 lbs</option>
+        </select>
+        <!-- <div *ngIf="ddlWeight.errors && (ddlWeight.dirty || ddlWeight.touched)">
+              <span class="help-bpx" style="color:red" *ngIf="ddlWeight.touched && ddlWeight.invalid">Weight
+               required.</span>
+            </div> -->
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Bio:</b>
+      <br />
+      <textarea name="txtBio" cols="8" rows="90" #txtBio="ngModel" type="text" id="txtBio"
+        [(ngModel)]="this.basicInfoModel.bio" class="form-control" style="padding-top:1px;  height:70px"
+        ngModel></textarea>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px" *ngIf="this.basicInfoModel?.interestedInType">
+      <b>Other Sporting Interest:</b>
+      <br />
+      <select name="ddlInterests" id="ddlInterests" class="form-control" ngmodel appSelectValidator="select"
+        #ddlInterests="ngModel" [(ngModel)]="this.basicInfoModel.interestedInType">
+        <option value="select" selected>Select Interest...</option>
+        <option value="8">Athletes and Sports</option>
+        <option value="9">Athletic Trainers</option>
+        <option value="39">Exercise Physiologists</option>
+        <option value="43">Fitness Entrepreneur</option>
+        <option value="90">Recreation Leader</option>
+        <option value="101">Sports Announcers</option>
+        <option value="102">Sports Coaches and Teachers</option>
+        <option value="103">Sportscaster</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="padding-bottom:12px"
+      [class.has-error]="this.basicInfoModel.sex && this.basicInfoModel.sex">
+      <b>Gender:</b>
+      <br />
+      <select name="ddlGender" id="ddlGender" #ddlGender="ngModel" [(ngModel)]="this.basicInfoModel.sex"
+        class="form-control" required appSelectValidator="select">
+        <option value="select">Select Gender...</option>
+        <option value="Female">Female</option>
+        <option value="Male">Male</option>
+      </select>
+
+      <div *ngIf="ddlGender.errors && (ddlGender.dirty || ddlGender.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="ddlGender.touched && ddlGender.invalid">Gender is
+          required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:10px">
+      <span class="basicInfoDataOther"><input id="chkShowGender" #chkShowGender="ngModel"
+          [(ngModel)]="this.basicInfoModel.showSexInProfile" type="checkbox" name="chkShowGender" /><label
+          for="chkShowGender">&nbsp;Show gender to other members</label></span>
+    </div>
+
+    <div class="form-group" style="padding-bottom:10px">
+      <table>
+        <tr>
+          <td class="basicInfoDesc">
+            <b>Birth Date:</b>
+            <br />
+            <div style="width:100%">
+              <table>
+                <tr>
+                  <td>
+                    <select name="ddlMonth" id="ddlMonth" #ddlMonth="ngModel" [(ngModel)]="this.basicInfoModel.dobMonth"
+                      required ngmodel appSelectValidator="select" class="form-control" autocomplete="off">
+                      <option value="select">Month...</option>
+                      <option value="1">Jan</option>
+                      <option value="10">Oct</option>
+                      <option value="11">Nov</option>
+                      <option value="12">Dec</option>
+                      <option value="2">Feb</option>
+                      <option value="3">Mar</option>
+                      <option value="4">Apr</option>
+                      <option value="5">May</option>
+                      <option value="6">Jun</option>
+                      <option value="7">Jul</option>
+                      <option value="8">Aug</option>
+                      <option value="9">Sep</option>
+                    </select>
+                  </td>
+                  <td>
+                    <select name="ddlDay" id="ddlDay" #ddlDay="ngModel" [(ngModel)]="this.basicInfoModel.dobDay"
+                      required ngmodel appSelectValidator="select" class="form-control" autocomplete="off">
+                      <option value="select">Day...</option>
+                      <option value="1">1</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="2">2</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                      <option value="24">24</option>
+                      <option value="25">25</option>
+                      <option value="26">26</option>
+                      <option value="27">27</option>
+                      <option value="28">28</option>
+                      <option value="29">29</option>
+                      <option value="3">3</option>
+                      <option value="30">30</option>
+                      <option value="31">31</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+
+                    </select>
+                  </td>
+                  <td>
+                    <select name="ddlYear" id="ddlYear" #ddlYear="ngModel" [(ngModel)]="this.basicInfoModel.dobYear"
+                      required ngmodel appSelectValidator="select" class="form-control" autocomplete="off">
+                      <option value="select">Year...</option>
+                      <option *ngFor="let year of years" [value]="year">
+                        {{year}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div *ngIf="(ddlMonth.errors && (ddlMonth.dirty || ddlMonth.touched)) ||
+                        (ddlDay.errors && (ddlDay.dirty || ddlDay.touched)) ||
+                        (ddlYear.errors && (ddlYear.dirty || ddlYear.touched))">
+        <span class="help-bpx" style="color:red" *ngIf="(ddlMonth.touched && ddlMonth.invalid)
+                          || (ddlDay.touched && ddlDay.invalid) || (ddlYear.touched && ddlYear.invalid)">Birth
+          date required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:7px" *ngIf="this.basicInfoModel?.showDOBType">
+      <span class="basicInfoDataOther"><input id="chkShowDOB" #chkShowDOB="ngModel"
+          [(ngModel)]="basicInfoModel.showDOBType" type="checkbox" name="chkShowDOB" /><label
+          for="chkShowDOB">&nbsp;Show
+          birth date to other members</label></span>
+    </div>
+
+    <div class="form-group" style="padding-bottom:8px">
+
+      <table>
+        <tr>
+          <td class="basicInfoDesc">
+            <b>Looking For:</b>
+            <br /><span style="font-weight:normal">
+              <span class="basicInfoData" style="font-weight:normal"><input id="chkEmployment" #chkEmployment="ngModel"
+                  [(ngModel)]="this.basicInfoModel.lookingForEmployment" type="checkbox"
+                  name="chkEmployment" />&nbsp;Employment</span>&nbsp;&nbsp;&nbsp;
+              <span class="basicInfoData" style="font-weight:normal"><input id="chkRecruitment"
+                  #chkRecruitment="ngModel" [(ngModel)]="this.basicInfoModel.lookingForRecruitment" type="checkbox"
+                  [checked]="false" name="chkRecruitment" />&nbsp;Recruitment</span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <td class="basicInfoDesc">
+
+            <span style="font-weight:normal">
+              <span style="font-weight:normal;color:black;"><input id="chkPartnership" #chkPartnership="ngModel"
+                  [(ngModel)]="this.basicInfoModel.lookingForPartnership" type="checkbox"
+                  name="chkPartnership" />&nbsp;Partnership</span>&nbsp;&nbsp;&nbsp;
+              <span class="basicInfoData" style="font-weight:normal"><input id="chkNetworking" #chkNetworking="ngModel"
+                  [(ngModel)]="this.basicInfoModel.lookingForNetworking" type="checkbox" name="chkNetworking"
+                  [checked]="false" />&nbsp;Networking</span>
+            </span>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+    <br>
+    <div>
+      <button type="submit" id="saveBasicInfo" [disabled]="!basicInfoForm.valid || isSaving" class="btn btn-default"
+        class="btn btn-primary btn-md">
+        <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving
+        ? "Saving..." : "Save"}}</button>
+    </div>
+    <div style="padding-bottom:60px">
+      <span style="color:green">{{isSuccess ? "Saved sucessfully." : ""}}</span>
+    </div>
+    <div class="clearfix"></div>
+  </form>
+</div>

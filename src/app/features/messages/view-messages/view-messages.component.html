@@ -1,0 +1,313 @@
+<div class="row">
+  <div class="col-sm-14 col-md-12">
+    <div class="mb-3 card" style="padding:10px">
+
+      <div class="card-header-tab card-header">
+        <div class="card-header-title font-size-lg text-capitalize font-weight-bold">
+          <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"> </i>
+          Messenger
+        </div>
+      </div>
+
+      <div class='col-sm-14 col-lg-25' style="padding:10px;">
+        <div class="container">
+          <table style=" width:0px; padding-top:25px">
+            <tr>
+              <td style="vertical-align: top">
+                <table style="width:0px;border-bottom: solid 2px white;">
+                  <tr>
+                    <td style=" text-align:right; vertical-align: middle">
+                      <div id="pnlInboxSearch" style="padding-bottom:15px">
+                        <form class="form-horizontal navbar-form navbar-left" id="searchForm" name="searchForm"
+                          #searchForm='ngForm' (ngSubmit)="doSearch()" role="search">
+                          <div class="input-group" style="font-size: 9pt;line-height: 0px;padding:3px 0px; width:220px">
+
+                            <div class="input-group">
+                              <input id="txtMsgSearch" name="txtMsgSearch" [(ngModel)]="this.searchModel.key" required
+                                ngModel class="form-control py-2 rounded-pill mr-1 pr-5" type="search"
+                                autocomplete="off" style="background-color:#f7f9fa;" placeholder="Search messages...">
+                              <span class="input-group-append">
+                                <button class="btn rounded-pill border-0 ml-n5" type="button">
+                                  <i class="fa fa-search"></i>
+                                </button>
+                              </span>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <div class="btn-group" role="group" aria-label="Message Menu"
+                  style="font-size: 8pt; border-bottom: solid 2px #e7eadf;">
+                  <button (click)="showNewMessagePopup()" title="Create new message" type="button" class="btn">
+                    <i class="fa fa-edit"></i>&nbsp;
+                  </button>
+                  @if (this.msgCnt!=0) {
+                  <span>
+                    <button (click)="markBoxes('Read')" title="Mark as read" type="button" class="btn">
+                      <i class="fa fa-envelope-open"></i>&nbsp;
+                    </button>
+
+                    <button (click)="markBoxes('UnRead')" title="Mark as un-read" type="button" class="btn">
+                      <i class="fa fa-envelope"></i>&nbsp;
+                    </button>
+
+                    <button (click)="DeleteItems();" type="button" title="Delete messages" class="btn">
+                      <i class="fa fa-trash"></i>&nbsp;
+                    </button>
+                  </span>
+                  }
+                </div>
+
+                @if (spinner) {
+                <div style="padding-left:0px;padding-top:5px; font-size:10pt;display:block">
+                  <i class="fa fa-spinner fa-spin"></i>&nbsp;Loading...
+                </div>
+                }
+                <table style=" width:0px; background-color:white;">
+                  <!-- middle part -->
+                  <tr>
+                    <td>
+                      <table style="width:350px;border-color: #e8e8e8; border-style: none; border-bottom: solid 2px #e7eadf;
+                                               text-align: left; border-width: 1px">
+                        <tr>
+                          <td style="width: 0px;padding-top:10px">
+                            <table>
+                              <tr>
+                                <td style="width: 140px; text-align: left; ">
+                                  <span style="color: Gray; font-weight: bold;">Select:&nbsp;</span>
+                                  <a href="" [ngClass]="this.textWeightVal == 'all' ? 'boldClass': 'normalClass'"
+                                    (click)="selectAll();" id="lbSelectAll">All</a>,
+                                  <a href="" [ngClass]="this.textWeightVal == 'none' ? 'boldClass': 'normalClass'"
+                                    (click)="selectNone();" id="lbSelectNone">None</a>
+                                </td>
+                                <td style="width: 210px; text-align: right; ">
+                                  <span style="color: Gray; font-weight: bold;">Show:&nbsp;</span>
+                                  <a href="" [ngClass]="this.textWeightShowVal == 'all' ? 'boldClass': 'normalClass'"
+                                    (click)="getMessages(this.memberId, 'Inbox', 'All');" id="lbShowAll">All</a>,
+                                  <a href="" [ngClass]="this.textWeightShowVal == 'unRead' ? 'boldClass': 'normalClass'"
+                                    (click)="getMessages(this.memberId, 'Inbox', 'UnRead');"
+                                    id="lbShowUnRead">Unread</a>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+
+          <div *ngIf="this.msgCnt==0;else showMsgList_Content">
+            <br />There are no messages to display.
+          </div>
+
+        </div>
+        <br><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #showMsgList_Content>
+  @if (this.msgCnt>0) {
+  <div style="padding-left:0px;padding-top:7px; padding-bottom:5px; font-size:9pt;display:block">
+    {{this.msgCnt}}&nbsp;message(s) found.
+  </div>
+  }
+  <div id="tbMsgPartialDiv" style="background-color:white; overflow-x:auto; height:400px">
+    <table
+      style="width: 350px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:11pt">
+      <tbody>
+        @for (res of messageInfoList; track res) {
+        <tr style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+
+          <td style="text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <input id="{res.messageID}" name="{cItem.messageID}" [(ngModel)]="res.selected" type="checkbox"
+              title="Select Message" />
+          </td>
+
+          <td style="text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <span *ngIf="res.messageState == '0'" (click)="markItem('Read',res.messageID);"><i
+                class="fas fa-envelope"></i></span>
+            <span *ngIf="res.messageState != '0'" (click)="markItem('UnRead',res.messageID);">
+              <i title="Mark as Read or UnRead" class="fas fa-envelope-open"></i></span>
+          </td>
+
+          <td style="text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <a href="" id="lbDelete" (click)="DeleteItem(res.messageID)"><i title="Delete Message"
+                class="fa fa-trash"></i></a>
+          </td>
+
+          <td
+            style="width: 40px; text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px; font-size:10pt">
+            <a [routerLink]="['/members/view-profile/show-profile']" [queryParams]="{memberID:res.fromID}"
+              style="border:none">
+              <img src="{{this.memImageUrlPath}}{{res.senderImage}}"
+                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+            </a>
+          </td>
+          <td style="vertical-align: top; text-align: left;vertical-align:top; font-size:10pt" class="textfonts10pt">
+            <a id="lbSName" [routerLink]="['/members/view-profile/show-profile']" [queryParams]="{memberID:res.fromID}"
+              href="" [ngClass]="res.messageState == '0' ? 'boldClass': 'normalClass'">{{res.senderID}}</a>
+            <br />
+            <a href="#" (click)="showOpenMessagePopup(
+                    res.fromID, res.senderImage,
+                    res.senderID,
+                    res.subject,
+                    res.msgDate, res.fullBody, res.messageID)" id="lbSubject" data-target="#openMsgModal"
+              data-toggle="modal" [ngClass]="res.messageState == '0' ? 'boldClass': 'normalClass'">{{res.subject}}</a>
+            <br />
+            <span id="lblMstDate" style="color:Gray;font-size:9pt;">{{res.msgDate}}</span>
+            <br>
+            <span id="lblBody" style="color:Gray;font-size:9pt;">{{res.body}}</span>
+            <br />
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <br>
+  </div>
+</ng-template>
+
+<!-- template for reply message -->
+<div class="modal fade" id="openMsgModal" tabindex="-1" role="dialog" aria-labelledby="#openMsgModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="openMsgModalTitle">
+          <img src="{{this.memImageUrlPath}}{{this.senderImage}}"
+            style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+          &nbsp; {{this.senderName}}
+        </h5>
+        <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #openMsgForm='ngForm'>
+          {{this.subject}}<br>
+          {{this.dateTime}}
+          <hr />
+          {{this.body}}
+          <hr />
+          Reply:<br>
+          <textarea autofocus="autofocus" [(ngModel)]="msgModel.message" required ngModel name="txtMsg"
+            placeholder="Type message..." style="height:50px;width:350px"></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="SendMessage() "
+          [disabled]="!openMsgForm.valid || spinner">
+          <i *ngIf="spinner" class='fas fa-spinner fa-spin'></i> {{spinner ? "Sending message..." : "Send Message"}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- template for compose new message -->
+<div class="modal fade" id="newMsgModal" tabindex="-1" role="dialog" aria-labelledby="#newMsgModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newMsgModalTitleLabel">Compose New Message</h5>
+        <button type="button" #closeNewButton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #newMsgForm='ngForm' name="newMsgForm" autocomplete="off">
+          <div class="Row">
+            <div class="Cell">
+              To:
+            </div>
+            <Div class="Cell">
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" md-maxlength="30" autocomplete="off" ng-model="txtKey" name="txtKey"
+                    #txtKey="ngModel" type="search" required ngModel [(ngModel)]="autoCompleteModel.name"
+                    (keyup)="searchContact(autoCompleteModel.name)" placeholder="Start typing a name..."
+                    style="width:297px; height:29px; padding-top:10px;" />
+                  <div *ngIf="txtKey.errors && (txtKey.dirty || txtKey.touched)  && !txtKey.valid">
+                    <span class="help-bpx" style="color:red; font-size:11pt">&nbsp;Required.</span>
+                  </div>
+                </div>
+
+                <div class="search-result" *ngIf="flag">
+                  <ul>
+                    <li *ngFor="let contact of contacts | async">
+                      <table>
+                        <tr>
+                          <td>
+                            <a (click)="onselectContact(contact.friendName, contact.connectionID)">
+                              <img src="{{this.memImageUrlPath}}{{contact.picturePath}}"
+                                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+                            </a>
+                          </td>
+                          <td style="font-size:10pt">
+                            <a (click)="onselectContact(contact.friendName, contact.contactID)">
+                              &nbsp;{{contact.friendName}}<br>
+                            </a>
+                            &nbsp;{{contact.titleDesc}}
+                          </td>
+                        </tr>
+                      </table>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Div>
+          </div>
+
+          <div class="Row">
+            <div class="Cell">
+              Subject:&nbsp;
+            </div>
+            <Div class="Cell">
+              <input type="text" [(ngModel)]="msgModel.subject" required ngModel #txtSubject="ngModel" name="txtSubject"
+                class="form-control" style="width:297px; height:29px;padding-left:10px" autocomplete="off">
+              <div *ngIf="txtSubject.errors && (txtSubject.dirty || txtSubject.touched)  && !txtSubject.valid">
+                <span class="help-bpx" style="color:red;font-size:11pt" *ngIf="txtSubject.errors['required']">
+                  Message subject
+                  is required.
+                </span>
+              </div>
+            </Div>
+          </div>
+          <hr />
+          <textarea [(ngModel)]="msgModel.message" autofocus="autofocus" required ngModel #txtMsg="ngModel"
+            name="txtMsg" placeholder="Type message..." autocomplete="off" class="form-control"
+            style="height:50px;width:360px"></textarea>
+          <div *ngIf="txtMsg.errors && (txtMsg.dirty || txtMsg.touched)  && !txtMsg.valid">
+            <span class="help-bpx" style="color:red;font-size:11pt" *ngIf="txtMsg.errors['required']">
+              Message text is
+              required.
+            </span>
+          </div>
+          <div *ngIf="showErrMsg">
+            <span class="help-bpx" style="color:red;">{{this.errMsg}}</span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendNewMsg()" [disabled]="!newMsgForm.valid || spinner">
+          <i *ngIf="spinner" class='fas fa-spinner fa-spin'></i> {{spinner ? "Sending message..." : "Send Message"}}
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

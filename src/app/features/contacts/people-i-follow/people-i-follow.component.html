@@ -1,0 +1,104 @@
+<div class="col-sm-14 col-md-12">
+  <div class="mb-3 card modal_radius" style="padding:10px">
+
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize font-weight-bold">
+        <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"> </i>
+        People I Follow
+      </div>
+    </div>
+    <br>
+    @if (spinner) {
+    <div style="padding-left:0px;padding-top:5px; font-size:8pt;display:block">
+      <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
+    </div>
+    }
+
+    <div *ngIf="this.contactCnt==0;else showConnectionList_Content">
+      You are not following any one yet!
+    </div>
+  </div>
+</div>
+
+<ng-template #showConnectionList_Content>
+
+  @if (this.contactCnt>1) {
+  <div style="padding-left:0px;padding-top:7px; padding-bottom:5px;display:block">
+    {{this.contactCnt}}&nbsp;people found.
+  </div>
+  }
+  @else if (this.contactCnt==1) {
+  <div style="padding-left:0px;padding-top:7px; padding-bottom:5px;display:block">
+    {{this.contactCnt}}&nbsp;person found.
+  </div>
+  }
+
+  <div id="tbMsgPartialDiv" style="background-color:white">
+    <table
+      style="width: 350px; text-align: left; border-left: 1px none #e7eadf; border-right:1px none #e7eadf; border-collapse: collapse; font-size:11pt">
+      <tbody>
+        @for (res of contactInfoList; track res) {
+        <tr style="border-bottom: solid 1px;border-bottom-color:#DBDBDB;">
+
+          <td
+            style="width: 40px; text-align: left; cursor:pointer;vertical-align:top; padding-top:6px;padding-right:4px"
+            class="textfonts8pt;">
+            <a href="" [routerLink]="['/members/view-profile/show-profile']" [queryParams]="{memberID:res.contactID}"
+              style="border:none">
+              <img src="{{this.memberImagesUrlPath}}{{res.picturePath}}"
+                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:40px;width:40px;border-radius:50%" />
+            </a>
+          </td>
+          <td style="vertical-align: top; text-align: left;vertical-align:top; padding-bottom:10px;">
+            <a id="lbSName" href="#" [routerLink]="['/members/view-profile/show-profile']" style="width:400px"
+              [queryParams]="{memberID:res.contactID}">
+              {{res.friendName}}
+            </a>
+            <br />
+            <span id="lblTitle" style="color:Gray;font-size:10pt;">{{(res.titleDesc=="") ? "Unknown Title" :
+              res.titleDesc }}</span>
+            <br>
+            <a style="font-size:10pt" id="lblUnfollow" title="Unfollow this member" href="#"
+              (click)="showUnfollowPopup(res.contactID);">
+              Unfollow
+            </a>
+            <br />
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    <br>
+  </div>
+</ng-template>
+
+<!-- Unfollow Modal -->
+<div class="modal fade" id="unfollowModal" tabindex="-1" role="dialog" aria-labelledby="unfollowModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Unfollow Member</h5>
+        <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label>Are you sure you want to unfollow this member?</label>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="doUnfollowMember()">
+          @if (spinner) {
+          <i class='fas fa-spinner fa-spin'></i> Unfollowing...
+          }
+          @else {
+          Yes
+          }
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>

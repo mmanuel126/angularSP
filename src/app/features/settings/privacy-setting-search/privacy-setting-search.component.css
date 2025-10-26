@@ -1,0 +1,42 @@
+
+.settingPriSearch8pt {
+    font-size: 10pt;
+    font-family: 'Lucida Grande', tahoma, helvetica;
+    width: 900px;
+}
+
+.settingPriSearchLBL {
+    font-weight: bold;
+    border-bottom-color: Gray;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    width: 350px;
+    /*font-family: 'Lucida Grande', tahoma, helvetica;*/
+    color: #484830;
+}
+
+.settingPriSearchText {
+    text-align: left;
+    font-size: 10pt;
+    font-family: 'Lucida Grande', tahoma, helvetica;
+}
+
+.settingPrivacytSearchLeft {
+    width: 0px;
+    text-align: left;
+    font-weight: normal;
+    color: #596a7d;
+    /*font-family: 'Lucida Grande', tahoma, helvetica;*/
+}
+
+.settingPriDDL {
+    font-family: 'Lucida Grande', tahoma, helvetica;
+    font-size: 10pt;
+}
+
+
+@media (min-width: 992px) {
+    .user-enabled {
+        margin-left: 40px;
+    }
+}

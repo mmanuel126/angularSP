@@ -1,0 +1,32 @@
+
+.settingPri8pt {
+    font-size: 10pt;
+    /* font-family: 'Lucida Grande', tahoma, helvetica; */
+}
+
+.settingPriLabel {
+    width: 150px;
+    text-align: right;
+    font-weight: normal;
+    color: #596a7d;
+    /* font-family: 'Lucida Grande', tahoma, helvetica; */
+}
+
+.settingPriText {
+    text-align: left;
+    font-size: 10pt;
+    /* font-family: 'Lucida Grande', tahoma, helvetica; */
+}
+
+.settingPriDDL {
+    text-align: left;
+    /* font-family: 'Lucida Grande', tahoma, helvetica; */
+    font-size: 10pt;
+}
+
+
+@media (min-width: 992px) {
+    .user-enabled {
+        margin-left: 40px;
+    }
+}

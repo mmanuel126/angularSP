@@ -1,0 +1,63 @@
+<div>
+    <form class="form-horizontal" name="asDeactivateForm" #asDeactivateForm='ngForm'
+          >
+  
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Reason for deactivating account:</b>
+        <br />
+        <select name="ddlReason" #ddlReason="ngModel" id="ddlReason" [(ngModel)]="asModel.reason"
+                style=" width:320px;height:29px;padding-top:1px" class="form-control" ngModel>
+          <option value="select">Select Reason...</option>
+          <option value="1">I am leaving temporarily. I will be back.</option>
+          <option value="2">I have another account that I will start using.</option>
+          <option value="3">I get too many emails, invites, and requests.</option>
+          <option value="4">I do not have enough privacy and security.</option>
+          <option value="5">I do not understand hot to use it.</option>
+          <option value="0">Other</option>
+        </select>
+      </div>
+  
+      <div class="form-group" style="padding-bottom:15px">
+        <b>Further Explanation:</b>
+        <br />
+        <textarea name="txtExplain" #txtExplain="ngModel" type="text" id="txtExplain" [(ngModel)]="asModel.explanation"
+                  placeholder="Explain deactivation" class="form-control" style=" width:400px;height:50px;" ngModel></textarea>
+      </div>
+  
+      <div style="padding-bottom:80px">
+        <button type="submit" id="saveASDeactivation"
+                data-toggle="modal" data-target="#confirmModal"
+                class="btn btn-primary btn-md">
+          Deactivate
+        </button>
+      </div>
+  
+    </form>
+  </div>
+  
+  <!-- Deactivate confirm  modal-->
+  <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Deactivate Account</h5>
+          <button type="button" #closeDeactivateButton class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #removeSchoolForm='ngForm'>
+            <label>Are you sure you want to deactivate your account?</label>
+          </form>
+        </div>
+        <div class="modal-footer" style="padding-bottom:60px">
+          <button type="button" class="btn btn-primary btn-md" (click)="doDeactivate()"
+                  [disabled]="!removeSchoolForm.valid || isSaving">
+            <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Deactivating..." : "Yes"}}
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

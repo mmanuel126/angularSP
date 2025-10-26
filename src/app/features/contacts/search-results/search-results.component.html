@@ -1,0 +1,59 @@
+<div class="col-sm-14 col-md-12">
+  <div class="mb-3 card modal_radius" style="padding:10px">
+
+    <div class="card-header-tab card-header">
+      <div class="card-header-title font-size-lg text-capitalize font-weight-bold">
+        <i class="header-icon lnr-cloud-download icon-gradient bg-happy-itmeo"></i>
+        Search result for text: <span style="color:navy">{{ searchModel.key }}</span>
+      </div>
+    </div>
+    <br>
+
+    <div>
+      <hr style="color:darkgray; border:solid 1px #e7eadf">
+    </div>
+
+    @if (spinner) {
+    <div style="padding-left:0px;padding-top:5px;font-size:8pt;display:block">
+      <i class="fas fa-spinner fa-spin"></i>&nbsp;Loading...
+    </div>
+    }
+
+    @if (contactCnt == 0) {
+    <div>There are no connections to display.</div>
+    } @else {
+    <ng-template #showConnectionList_Content>
+      @if (contactCnt > 0) {
+      <div style="padding-left:0px;padding-top:7px;padding-bottom:5px;display:block">
+        {{ contactCnt }}&nbsp;member(s) found.
+      </div>
+      }
+      <div id="tbMsgPartialDiv" style="background-color:white">
+        <table
+          style="width:600px;text-align:left;border-collapse:collapse;font-size:11pt;border-left:none;border-right:none;">
+          <tbody>
+            @for (res of contactInfoList; track res.entityID) {
+            <tr style="border-bottom:solid 1px #DBDBDB;">
+              <td style="width:40px;text-align:left;cursor:pointer;vertical-align:top;padding-top:6px;padding-right:4px"
+                class="textfonts8pt;">
+                <a [routerLink]="['/members/show-profile']" [queryParams]="{memberID: res.entityID}">
+                  <img [src]="memberImagesUrlPath + res.picturePath"
+                    style="border:1px none LightGrey;height:40px;width:40px;border-radius:50%" />
+                </a>
+              </td>
+              <td style="vertical-align:top;text-align:left;padding-bottom:10px;">
+                <a [routerLink]="['/members/show-profile']" [queryParams]="{memberID: res.entityID}"
+                  style="width:400px">{{ res.entityName }}</a>
+                <br />
+                <span style="color:Gray;font-size:10pt;">{{ res.cityState || "Unknown Title" }}</span>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+        <br>
+      </div>
+    </ng-template>
+    }
+  </div>
+</div>

@@ -1,0 +1,22 @@
+﻿export class PrivacySettings {
+  ID: string = '0';
+  memberID: string = '0';
+  profile: string = '';
+  basicInfo: string = '';
+  personalInfo: string = '';
+  photosTagOfYou: string = '';
+  videosTagOfYou: string = '';
+  contactInfo: string = '';
+  education: string = '';
+  workInfo: string = '';
+  IMdisplayName: string = '';
+  mobilePhone: string = '';
+  otherPhone: string = '';
+  emailAddress: string = '';
+  visibility: string = '';
+  viewProfilePicture: boolean = false;
+  viewFriendsList: boolean = false;
+  viewLinksToRequestAddingYouAsFriend: boolean = false;
+  viewLinkTSendYouMsg: boolean = false;
+  email: string = '';
+}

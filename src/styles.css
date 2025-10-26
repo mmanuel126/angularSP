@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+.logo_div {
+  text-align: center;
+}
+
+.logo_size {
+  width: 150px;
+  height: 30px;
+}
+
+.modal_radius {
+  border-radius: 20px;
+}
+
+.msg_color {
+  color: red;
+}
+
+a {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none !important;
+}

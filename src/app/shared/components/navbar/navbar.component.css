@@ -1,0 +1,107 @@
+input[type=text] {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  }
+  
+  /* When the input field gets focus, change its width to 100% */
+  input[type=text]:focus {
+    width: 100%;
+  }
+
+  .inner-addon .fa {
+    position: absolute;
+    padding: 3px 6px;
+    pointer-events: none;
+}
+.inner-addon {
+  position: relative;
+}
+.inner-addon .fa {
+  position: absolute;
+  padding: 3px 6px;
+  pointer-events: none;
+}
+.left-addon .fa  { left:  0px;}
+.left-addon input  { padding-left:  30px; }
+
+.inner-addon-tall input {
+  padding: 8px 5px 8px 30px;
+}
+.inner-addon-tall .fa {
+  padding: 10px;
+}
+
+/* cleien serach  dropdown menu */
+
+.search-result {
+  font-size:9pt;
+  /* border: .5px solid #ccc; #4A6792;*/
+  width: 340px; 
+  background-color: white;
+  cursor: pointer;
+  text-align: left;
+  max-height: 350px;
+  overflow: auto;
+  position: absolute;
+  z-index: 7;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px 0px 5px #aaaaaa; 
+
+}
+
+.search-result ul {
+  margin: 0px;
+  padding: 0px;
+  list-style:none
+}
+
+.search-result ul li {
+  border-bottom: #ccc solid 1px; background-color: white; color:black;
+  padding: 5px 0px 5px 10px;
+}
+
+.search-result ul li:hover {
+  background: #f2f2f2;
+}
+
+
+  /* Fixes dropdown menus placed on the right side */
+  .ml-auto .dropdown-menu {
+      left: auto !important;
+      right: 0px;
+  }
+
+  a#navbarDropdown.nav-link.dropdown-toggle:active,
+  a#navbarDropdown.nav-link.dropdown-toggle:focus {
+      outline: 0;
+  }
+
+
+.logo_popup_text {color: #4A6792; font-size:20pt; font-weight: bolder; font-family: "Brush Script MT"}
+.icon-background {
+  color: #d2d5da; /*#C8B9AC;*/
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.form-rounded {
+  border-radius: 1rem;
+  }
+
+  .navbar-menu-style {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0px 0px 5px #aaaaaa; 
+  
+  }

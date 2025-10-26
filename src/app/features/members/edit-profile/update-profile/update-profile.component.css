@@ -1,0 +1,9 @@
+/* Change selected tab text color */
+::ng-deep .custom-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #28a745 !important; /* ✅ Green text */
+}
+
+/* Change the underline (ink bar) color */
+::ng-deep .custom-tabs .mat-mdc-tab-indicator .mat-mdc-tab-indicator-content--underline {
+  border-color: #28a745 !important; /* ✅ Green underline */
+}

@@ -1,0 +1,562 @@
+<div class="row">
+  <div class="col-sm-14 col-md-12">
+    <div class="mb-3 card modal_radius" style="padding:10px">
+      <div class='col-sm-14 col-lg-25' style="padding:10px;">
+        <!-- member name and title -->
+        <div class="container show_member_pic_bg" style="font-size:11pt">
+          <table style="width: 100%; padding:30px">
+            <tr>
+              <td style="text-align:center; width:60px;padding-top:5px" class="user-image">
+                <img id="memberImg" width="120px" height="120px"
+                  style="border-radius:50%; border-color:white; border-style:solid; border-width:thick;"
+                  src="{{this.memImage}}">
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div style="text-align:center;">
+          <span height="25px"
+            style="padding-top:5px;color: #484830; vertical-align: middle; text-align: center;padding-left:6px; text-align:center;">
+            <b>{{this.memName}}</b>
+            <span *ngIf="this.memTitle !=''"><br>{{this.memTitle}}</span>
+            <span *ngIf="showAddAsContact" style="font-size:10pt">
+              <br>
+              <a (click)="addSearchContactPopup(this.memName)" href='#'>Add as Contact</a>
+            </span>
+            <span *ngIf="showFollowMember" style="font-size:10pt">
+              <br>
+              <a (click)="doFollowMember()" data-toggle="modal" href=''>Follow this Member</a>
+            </span>
+          </span>
+
+        </div>
+        <br>
+        <!-- tab contents -->
+        <div class="container" style="font-size:9pt">
+
+          <mat-tab-group class="custom-tabs">
+
+            <mat-tab label="Basic Info.">
+              <br>
+              <div id="BasicInfoContentPanel" style="padding-top:10px">
+                <table *ngIf="this.sport!=''" style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">Sport:&nbsp;</td>
+                    <td class="textDataValue" style="text-align: left">{{this.sport}}</td>
+                  </tr>
+                </table>
+                <table *ngIf="this.cStatus != ''" style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">Status:&nbsp;</td>
+                    <td class="textDataValue" style="text-align: left">
+                      <span id="lblIndustry">{{this.basicInfoModel.currentStatus}}</span>
+                    </td>
+                  </tr>
+                </table>
+                <div *ngIf="this.cStatus =='Athlete (Amateur)' || this.cStatus == 'Athlete (Professional)' ">
+                  <table *ngIf="this.basicInfoModel?.leftRightHandFoot" style="border-bottom: solid 1px #e7eadf; ">
+                    <tr>
+                      <td class="textDataLabel" style="text-align: right;width:190px">
+                        Preferred Hand/Foot:&nbsp;
+                      </td>
+                      <td class="textDataValue" style="text-align: left">
+                        <span id="lblStatus">{{this.basicInfoModel.leftRightHandFoot}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <table *ngIf="this.basicInfoModel?.preferredPosition" style="border-bottom: solid 1px #e7eadf; ">
+                    <tr>
+                      <td class="textDataLabel" style="text-align: right;width:190px">
+                        Preferred Position:&nbsp;
+                      </td>
+                      <td class="textDataValue" style="text-align: left">
+                        <span id="lblInterestedIn">{{this.basicInfoModel.preferredPosition}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <table *ngIf="this.basicInfoModel?.secondaryPosition" style="border-bottom: solid 1px #e7eadf; ">
+                    <tr>
+                      <td class="textDataLabel" style="text-align: right;width:190px">
+                        Secondary Position:&nbsp;
+                      </td>
+                      <td class="textDataValue" style="text-align: left">
+                        <span id="lblInterestedIn">{{this.basicInfoModel.secondaryPosition}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <table *ngIf="this.basicInfoModel?.height" style="border-bottom: solid 1px #e7eadf; ">
+                    <tr>
+                      <td class="textDataLabel" style="text-align: right;width:190px">
+                        Heigth:&nbsp;
+                      </td>
+                      <td class="textDataValue" style="text-align: left">
+                        <span id="lblInterestedIn">{{this.basicInfoModel.height}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                  <table *ngIf="this.basicInfoModel?.weight" style="border-bottom: solid 1px #e7eadf; ">
+                    <tr>
+                      <td class="textDataLabel" style="text-align: right;width:190px">
+                        Weight:&nbsp;
+                      </td>
+                      <td class="textDataValue" style="text-align: left">
+                        <span id="lblInterestedIn">{{this.basicInfoModel.weight}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <table *ngIf="this.showSex=='1' && this.basicInfoModel?.sex" style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">
+                      Gender:&nbsp;
+                    </td>
+                    <td class="textDataValue" style="text-align: left">
+                      <span id="lblGender">{{this.basicInfoModel.sex}}</span>
+                    </td>
+                  </tr>
+                </table>
+                <table *ngIf="this.showDOB=='1' && this.basicInfoModel?.memProfileDOB "
+                  style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">
+                      Birth Date:&nbsp;
+                    </td>
+                    <td class="textDataValue" style="text-align: left">
+                      <span id="lblBDate">{{(this.basicInfoModel.memProfileDOB=="0/0/0") ? "" :
+                        this.basicInfoModel.memProfileDOB}}</span>
+                    </td>
+                  </tr>
+                </table>
+
+                <table *ngIf="this.memLookingFor!=''" style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">
+                      Looking for:&nbsp;
+                    </td>
+                    <td class="textDataValue" style="text-align: left">
+                      <span id="lblLookingFor">{{memLookingFor}}</span>
+                    </td>
+                  </tr>
+                </table>
+                <table>
+                  <tr>
+                    <td>&nbsp;</td>
+                  </tr>
+                </table>
+                <table *ngIf="this.bio" style="border-bottom: solid 1px #e7eadf; ">
+                  <tr>
+                    <td class="textDataLabel" style="text-align: right;width:190px">
+                      Biography:&nbsp;
+                    </td>
+                    <td class="textDataValue" style="text-align: left; width: 400px">
+                      <span id="lblInterestedIn">{{this.basicInfoModel.bio}}</span>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <br><br>
+            </mat-tab>
+
+            <mat-tab label="Contact Info.">
+              <br>
+              <div id="ContactInfoContentPanel" style="padding-top:10px">
+                <table cellspacing="2" cellpadding="0" style="margin-top: 0px; margin-bottom: 0px;
+                    text-align: left;">
+                  <tr>
+                    <td class="settingAct8pt" style="padding-left:10px">
+                      <div id="ContactInfoContentPanel">
+                        <table *ngIf="this.showEmail && this.contactInfoModel?.email"
+                          style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Email:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblEmail" class="textDataValue" MaxLength="100"
+                                style="display:inline-block;width:200px;">{{this.contactInfoModel.email}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                        <table *ngIf="this.showEmail && this.contactInfoModel?.otherEmail"
+                          style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Other Email:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblAltEmail" class="textDataValue" MaxLength="100"
+                                style="display:inline-block;width:200px;">{{this.contactInfoModel.otherEmail}}</span>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.facebook" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td>
+                              &nbsp;
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Facebook:&nbsp;
+                            </td>
+                            <td>
+                              <a href="{{this.contactInfoModel.facebook}}" target='_blank' style="border:none">
+                                <span id="lblFacebook" MaxLength="100"
+                                  style="display:inline-block;width:400px;">{{this.contactInfoModel.facebook}}</span>
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.instagram" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Instagram:&nbsp;
+                            </td>
+                            <td>
+                              <a href="{{this.contactInfoModel.instagram}}" target='_blank' style="border:none">
+                                <span id="lblInstagram" MaxLength="100"
+                                  style="display:inline-block;width:400px;">{{this.contactInfoModel.instagram}}</span>
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.twitter" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Twitter handle:&nbsp;
+                            </td>
+                            <td>
+                              <a href="{{this.contactInfoModel.twitter}}" target='_blank' style="border:none">
+                                <span id="lblTwitter" MaxLength="100"
+                                  style="display:inline-block;width:400px;">{{this.contactInfoModel.twitter}}</span>
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.showLinks && this.contactInfoModel?.website "
+                          style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="vertical-align: top;width:190px">
+                              Personal website:&nbsp;
+                            </td>
+                            <td style="vertical-align: top">
+                              <a href="{{this.contactInfoModel.website}}" target='_blank' style="border:none">
+                                <span id="lblWebSites" TextMode="MultiLine" MaxLength="200"
+                                  style="display:inline-block;width:400px;">{{this.contactInfoModel.website}}</span>
+                              </a>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <div *ngIf="this.contactInfoModel?.showCellPhone" id="CellPhoneInfoContentPanel"
+                          style="width:495px;">
+                          <table style="border-bottom: solid 1px #e7eadf; ">
+                            <tr>
+                              <td>
+                                &nbsp;
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="textDataLabel" style="width:190px">
+                                Cell Phone:&nbsp;
+                              </td>
+                              <td>
+                                <span id="lblCellPhone" class="textDataValue" MaxLength="20"
+                                  style="display:inline-block;width:150px;">{{this.contactInfoModel.cellPhone}}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+
+                        <div *ngIf="this.contactInfoModel?.showHomePhone" id="OtherPhoneInfoContentPanel"
+                          style="width:495px;">
+                          <table style="border-bottom: solid 1px #e7eadf; ">
+                            <tr>
+                              <td class="textDataLabel" style="width:190px">
+                                Home Phone::&nbsp;
+                              </td>
+                              <td class="textDataValue">
+                                <span id="lblOtherPhone" class="textDataValue" MaxLength="20"
+                                  style="display:inline-block;width:150px;">{{this.contactInfoModel.homePhone}}</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+
+                        <table style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td>
+                              &nbsp;
+                            </td>
+                          </tr>
+                        </table>
+                        <table *ngIf="this.contactInfoModel?.showAddress" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Address:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblAddress" class="textDataValue" MaxLength="50"
+                                style="display:inline-block;width:320px;">{{this.contactInfoModel.address}}</span>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.showAddress" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              City/Town:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblCity" class="textDataValue" MaxLength="50"
+                                style="display:inline-block;width:220px;">{{this.contactInfoModel.city}}</span>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.showAddress" style="border-bottom: solid 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              State:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblState" class="textDataValue" MaxLength="50"
+                                style="display:inline-block;width:220px;">{{this.contactInfoModel.state}}</span>
+                            </td>
+                          </tr>
+                        </table>
+
+                        <table *ngIf="this.contactInfoModel?.showAddress" style="border-bottom: none 1px #e7eadf; ">
+                          <tr>
+                            <td class="textDataLabel" style="width:190px">
+                              Zip Code:&nbsp;
+                            </td>
+                            <td class="textDataValue">
+                              <span id="lblZipCode" class="textDataValue" MaxLength="50"
+                                style="display:inline-block;width:220px;">{{this.contactInfoModel.zip}}</span>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <br><br>
+            </mat-tab>
+
+            <mat-tab label="Education">
+              <br>
+              <div id="EducationContentPanel" style="padding-top:10px; overflow-x: auto; height: 450px">
+                <table>
+                  <tr *ngFor='let res of educationInfoModel'>
+                    <td style="padding-left:10px">
+                      <table style="text-align: left;">
+                        <tr>
+                          <td style="width: 50px; text-align: left; cursor:pointer;vertical-align:top" class="">
+                            <a href="{{res.webSite}}" target='_blank' style="border:none">
+                              <img src="{{res.schoolImage}}"
+                                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:35px;width:35px;border-radius:50%" />
+                            </a>
+                          </td>
+                          <td style="vertical-align: top; text-align: left; width: 100%;vertical-align:top"
+                            class="textDataLabel">
+                            <a id="lbInstName" href="{{res.webSite}}" target='_blank'
+                              style="font-weight:normal;">{{res.schoolName}}</a>
+                            <br />
+                            <span id="lblAddress" class="" style="color:#484830;">{{res.schoolAddress}}</span>
+                            <br />
+                            <span id="lblClassMajor" class="" style="color:#484830;">
+                              {{res.yearClass}} -
+                              {{res.major}}
+                            </span>
+                            <br />
+                            <span id="lblDegree" class="" style="color:Gray;">{{res.degree}}</span>
+                            <br />
+                            <span *ngIf="res.sportLevelType!=''" id="llbPlayed" class="" style="color:Gray;">
+                              Played
+                              {{res.sportLevelType}} {{this.sport}}
+                            </span>
+                          </td>
+                          <td style="vertical-align: top; text-align: Right; width: 20%;" class="">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr *ngIf='eduCount == 0'>
+                    <td class="textDataLabel" style="width:250px">
+                      No educational information found.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </mat-tab>
+
+            <!-- show photos tab -->
+
+            <mat-tab label="Photos">
+              <br>
+              <span class="textDataLabel">
+                This website uses a member's public Instagram posts to display their public images to showcase their
+                talents.
+                Click the link below to get redirected to Instagram.<br><br>
+
+                <span *ngIf="this.contactInfoModel?.instagram" style="border-bottom: solid 1px #e7eadf; ">
+
+                  <a href="{{this.contactInfoModel.instagram}}" target='_blank' style="border:none; text-align:left">
+                    <span id="lblInstagram" MaxLength="100"
+                      style="display:inline-block;width:400px;">{{this.contactInfoModel.instagram}}</span>
+                  </a>
+
+                </span>
+              </span>
+            </mat-tab>
+
+            <!-- show video tab -->
+            <mat-tab label="Videos">
+              <br>
+              <span class="textDataLabel" *ngIf="this.playList">
+                We use a member's public youtube playlists to show and play their showcase
+                videos.
+                <br><br>
+                <b>Select playlist:</b>
+                &nbsp;
+                <!-- The four columns -->
+                <div class="scrollmenu">
+                  <div class="row">
+                    <div *ngFor="let item of playList" class="column"
+                      style="padding-right:10px; font-size:9pt; color:white; text-align:left">
+                      <img (click)="onPlayListChange(item.id)" src="{{item.defaultThumbnail}}"
+                        title="{{item.description}}" alt="" style="width:100%;cursor:hand">
+                      <br>{{item.title}}
+
+                    </div>
+
+                  </div>
+                </div>
+                <hr style="background-color: lightgray;">
+              </span>
+              <span *ngIf="!playList?.length" class="textDataLabel" style="width:250px">
+                No youtube playlist were found for this member.
+              </span>
+
+              <div id="VideosContentPanel" style="padding-top:10px">
+                <table>
+                  <tr *ngFor='let vid of videosList'>
+                    <td style="padding-left:10px">
+                      <table style="text-align: left;">
+                        <tr>
+                          <td style="width: 50px; text-align: left; cursor:pointer;vertical-align:top" class="">
+
+                            <a href="https://www.youtube.com/watch?v={{vid.id}}" target='_blank'>
+                              <img
+                                style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:'{{vid.defaultThumbnailHeight}}px';width:'{{vid.defaultThumbnailWidth}}px';"
+                                src="{{vid.defaultThumbnail}}" alt="">
+                            </a>
+
+                            <!--a href="#" data-toggle="modal" data-target="#videoModal"
+                                 (click)="showOpenPopup(vid.id)" style="border:none">
+                                <img src="{{vid.defaultThumbnail}}"
+                                     style="color:#596A7D;border-color:LightGrey;border-width:1px;border-style:None;height:'{{vid.defaultThumbnailHeight}}px';width:'{{vid.defaultThumbnailWidth}}px';" />
+                              </a -->
+                          </td>
+                          <td><span style="width:5px"></span></td>
+                          <td style="vertical-align: top; text-align: left; width: 100%;vertical-align:top;"
+                            class="textDataLabel">
+
+                            <a id="lblTitle" href="https://www.youtube.com/watch?v={{vid.id}}" target='_blank'
+                              style="font-weight:normal;padding-right:20px;">
+                              {{vid.title}}
+                            </a>
+
+                            <!-- a id="lblTitle" href="#" data-toggle="modal" data-target="#videoModal"
+                                 (click)="showOpenPopup(vid.id)"
+                                 style="font-weight:normal;padding-right:20px;">{{vid.title}}</a -->
+
+                            <br />
+                            <span id="lblDesc" style="color:gray;">{{vid.description}}</span>
+                            <br />
+                            <span id="lblDate" class="" style="color:#596A7D;">
+                              Published date:&nbsp;{{vid.publishedAt}}
+                            </span>
+                            <br />
+                          </td>
+                          <td style="vertical-align: top; text-align: Right; width: 20%;" class="">
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <tr *ngIf='vidCount == 0'>
+                    <td>
+                      No videos found.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      &nbsp;
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- template to add contact  -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Requesting to Add Contact</h5>
+        <button type="button" #closebutton class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addForm='ngForm'>
+          <p>
+            {{this.contactName}}&nbsp; will have to confirm your request. Are you sure you want to send this
+            contact request?
+          </p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendRequest()">
+          @if (spinner) {
+          <i class='fas fa-spinner fa-spin'></i> Sending...
+          }
+          @else {
+          Send Request
+          }
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

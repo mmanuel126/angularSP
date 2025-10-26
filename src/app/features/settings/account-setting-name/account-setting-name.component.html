@@ -1,0 +1,40 @@
+<div>
+  <form class="form-horizontal" name="asNameForm" #asNameForm='ngForm' (ngSubmit)="saveASName()">
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>First&nbsp;Name:</b>
+      <br />
+      <input name="txtFirstName" #txtFirstName="ngModel" type="text" id="txtFirstName" [(ngModel)]="asModel.firstName"
+        placeholder="Enter first name" class="form-control" required ngModel />
+      <div *ngIf="txtFirstName.errors && (txtFirstName.dirty || txtFirstName.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtFirstName.errors['required']">First name required.</span>
+      </div>
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Middle&nbsp;Name:</b>
+      <br />
+      <input name="txtMName" #txtFName="ngModel" type="text" id="txtMName" [(ngModel)]="asModel.middleName"
+        Placeholder="Enter middle name" class="form-control" />
+    </div>
+
+    <div class="form-group" style="padding-bottom:15px">
+      <b>Last&nbsp;Name:</b>
+      <br />
+      <input name="txtLName" #txtLName="ngModel" type="text" id="txtLName" [(ngModel)]="asModel.lastName"
+        placeholder="Enter last name" class="form-control" required ngModel />
+      <div *ngIf="txtLName.errors && (txtLName.dirty || txtLName.touched)">
+        <span class="help-bpx" style="color:red;" *ngIf="txtLName.errors['required']">Last name required.</span>
+      </div>
+    </div>
+
+    <div>
+      <button type="submit" id="saveName" [disabled]="!asNameForm.valid || isSaving" class="btn btn-primary btn-md">
+        <i *ngIf="isSaving" class='fa fa-spinner fa-spin'></i> {{isSaving ? "Saving..." : "Save"}}</button>
+    </div>
+    <div style="padding-bottom:60px">
+      <span style="color:green">{{this.isNameSuccess ? "Saved sucessfully." : ""}}</span>
+    </div>
+
+  </form>
+</div>
